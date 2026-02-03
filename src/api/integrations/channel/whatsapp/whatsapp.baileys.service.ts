@@ -164,7 +164,7 @@ export interface ExtendedIMessageKey extends proto.IMessageKey {
 
 const groupMetadataCache = new CacheService(new CacheEngine(configService, 'groups').getEngine());
 
-// Adicione a função getVideoDuration no início do arquivo
+// Add the getVideoDuration function near the top of the file.
 async function getVideoDuration(input: Buffer | string | Readable): Promise<number> {
   const MediaInfoFactory = (await import('mediainfo.js')).default;
   const mediainfo = await MediaInfoFactory({ format: 'JSON' });
@@ -212,7 +212,7 @@ async function getVideoDuration(input: Buffer | string | Readable): Promise<numb
       return data.slice(offset, offset + size);
     };
   } else {
-    throw new Error('Tipo de entrada não suportado');
+    throw new Error('Unsupported input type');
   }
 
   const result = await mediainfo.analyzeData(() => fileSize, readChunk);
@@ -727,7 +727,7 @@ export class BaileysStartupService extends ChannelStartupService {
       this.loadWebhook();
       this.loadProxy();
 
-      // Remontar o messageProcessor para garantir que está funcionando após reconexão
+      // Remount the messageProcessor to ensure it works after reconnection.
       this.messageProcessor.mount({
         onMessageReceive: this.messageHandle['messages.upsert'].bind(this),
       });
@@ -1395,7 +1395,7 @@ export class BaileysStartupService extends ChannelStartupService {
 
                   const message: any = received;
 
-                  // Verificação adicional para garantir que há conteúdo de mídia real
+                  // Additional verification to ensure there is real media content.
                   const hasRealMedia = this.hasValidMediaContent(message);
 
                   if (!hasRealMedia) {
@@ -1762,15 +1762,15 @@ export class BaileysStartupService extends ChannelStartupService {
       };
 
       try {
-        // Usa o mesmo método que o endpoint /group/participants
+        // Use the same method as the /group/participants endpoint.
         const groupParticipants = await this.findParticipants({ groupJid: participantsUpdate.id });
 
-        // Validação para garantir que temos dados válidos
+        // Validate to ensure we have valid data.
         if (!groupParticipants?.participants || !Array.isArray(groupParticipants.participants)) {
           throw new Error('Invalid participant data received from findParticipants');
         }
 
-        // Filtra apenas os participantes que estão no evento
+        // Filter only the participants that are part of the event.
         const resolvedParticipants = participantsUpdate.participants.map((participantId) => {
           const participantData = groupParticipants.participants.find((p) => p.id === participantId);
 
@@ -1789,11 +1789,11 @@ export class BaileysStartupService extends ChannelStartupService {
           };
         });
 
-        // Mantém formato original + adiciona dados resolvidos
+        // Keep the original format and add resolved data.
         const enhancedParticipantsUpdate = {
           ...participantsUpdate,
-          participants: participantsUpdate.participants, // Mantém array original de strings
-          // Adiciona dados resolvidos em campo separado
+          participants: participantsUpdate.participants, // Keep the original array of strings.
+          // Add resolved data in a separate field.
           participantsData: resolvedParticipants,
         };
 
@@ -1802,7 +1802,7 @@ export class BaileysStartupService extends ChannelStartupService {
         this.logger.error(
           `Failed to resolve participant data for GROUP_PARTICIPANTS_UPDATE webhook: ${error.message} | Group: ${participantsUpdate.id} | Participants: ${participantsUpdate.participants.length}`,
         );
-        // Fallback - envia sem conversão
+        // Fallback - send without conversion.
         this.sendDataWebhook(Events.GROUP_PARTICIPANTS_UPDATE, participantsUpdate);
       }
 
@@ -2152,7 +2152,7 @@ export class BaileysStartupService extends ChannelStartupService {
 
     if (ephemeralExpiration) option.ephemeralExpiration = ephemeralExpiration;
 
-    // NOTE: NÃO DEVEMOS GERAR O messageId AQUI, SOMENTE SE VIER INFORMADO POR PARAMETRO. A GERAÇÃO ANTERIOR IMPEDE O WZAP DE IDENTIFICAR A SOURCE.
+    // NOTE: Do not generate messageId here unless it is provided as a parameter. Generating it here prevents WZAP from identifying the source.
     if (messageId) option.messageId = messageId;
 
     if (message['viewOnceMessage']) {
@@ -2466,7 +2466,7 @@ export class BaileysStartupService extends ChannelStartupService {
 
             const message: any = messageRaw;
 
-            // Verificação adicional para garantir que há conteúdo de mídia real
+            // Additional verification to ensure there is real media content.
             const hasRealMedia = this.hasValidMediaContent(message);
 
             if (!hasRealMedia) {
@@ -2933,7 +2933,7 @@ export class BaileysStartupService extends ChannelStartupService {
         return await sharp(imageBuffer).webp().toBuffer();
       }
     } catch (error) {
-      console.error('Erro ao converter a imagem para WebP:', error);
+      console.error('Error converting the image to WebP:', error);
       throw error;
     }
   }
@@ -3478,7 +3478,7 @@ export class BaileysStartupService extends ChannelStartupService {
         contact.wuid = createJid(contact.phoneNumber);
       }
 
-      result += `item1.TEL;waid=${contact.wuid}:${contact.phoneNumber}\n` + 'item1.X-ABLabel:Celular\n' + 'END:VCARD';
+      result += `item1.TEL;waid=${contact.wuid}:${contact.phoneNumber}\n` + 'item1.X-ABLabel:Mobile\n' + 'END:VCARD';
 
       return result;
     };
@@ -3652,16 +3652,16 @@ export class BaileysStartupService extends ChannelStartupService {
     // Combine results
     onWhatsapp.push(...verifiedUsers);
 
-    // TODO: Salvar no cache apenas números que NÃO estavam no cache
+    // TODO: Save only numbers that were NOT already in the cache.
     const numbersToCache = onWhatsapp.filter((user) => {
       if (!user.exists) return false;
-      // Verifica se estava no cache usando jidOptions
+      // Check whether it was in the cache using jidOptions.
       const cached = cachedNumbers?.find((cached) => cached.jidOptions.includes(user.jid.replace('+', '')));
       return !cached;
     });
 
     if (numbersToCache.length > 0) {
-      this.logger.verbose(`Salvando ${numbersToCache.length} números no cache`);
+      this.logger.verbose(`Saving ${numbersToCache.length} numbers to the cache`);
       await saveOnWhatsappCache(
         numbersToCache.map((user) => ({
           remoteJid: user.jid,
@@ -4658,7 +4658,7 @@ export class BaileysStartupService extends ChannelStartupService {
       pushName:
         message.pushName ||
         (message.key.fromMe
-          ? 'Você'
+          ? 'You'
           : message?.participant || (message.key?.participant ? message.key.participant.split('@')[0] : null)),
       status: status[message.status],
       message: this.deserializeMessageBuffers({ ...message.message }),
@@ -4971,7 +4971,7 @@ export class BaileysStartupService extends ChannelStartupService {
 
   public async fetchCollections(instanceName: string, data: getCollectionsDto) {
     const jid = data.number ? createJid(data.number) : this.client?.user?.id;
-    const limit = data.limit <= 20 ? data.limit : 20; //(tem esse limite, não sei porque)
+    const limit = data.limit <= 20 ? data.limit : 20; // (there is this limit; not sure why)
 
     const onWhatsapp = (await this.whatsappNumber({ numbers: [jid] }))?.shift();
 
@@ -5096,7 +5096,7 @@ export class BaileysStartupService extends ChannelStartupService {
 
       if (!message.pushName) {
         if (messageKey.fromMe) {
-          message.pushName = 'Você';
+          message.pushName = 'You';
         } else if (message.contextInfo) {
           const contextInfo = message.contextInfo as { participant?: string };
           if (contextInfo.participant) {

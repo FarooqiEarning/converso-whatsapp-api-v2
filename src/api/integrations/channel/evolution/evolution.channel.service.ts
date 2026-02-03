@@ -458,7 +458,7 @@ export class converso-whatsapp-apiStartupService extends ChannelStartupService {
       if (base64 || file || audioFile) {
         if (this.configService.get<S3>('S3').ENABLE) {
           try {
-            // Verificação adicional para garantir que há conteúdo de mídia real
+            // Additional verification to ensure there is real media content.
             const hasRealMedia = this.hasValidMediaContent(messageRaw);
 
             if (!hasRealMedia) {
@@ -695,7 +695,7 @@ export class converso-whatsapp-apiStartupService extends ChannelStartupService {
     if (file?.buffer) {
       mediaData.audio = file.buffer.toString('base64');
     } else {
-      console.error('El archivo o buffer no est� definido correctamente.');
+      console.error('The file or buffer is not defined correctly.');
       throw new Error('File or buffer is undefined.');
     }
 
