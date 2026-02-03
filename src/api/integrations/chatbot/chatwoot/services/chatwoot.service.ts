@@ -641,7 +641,7 @@ export class ChatwootService {
     if (!client) return null;
 
     try {
-      // Processa atualização de contatos já criados @lid
+      // Process updates for contacts already created with @lid.
       if (phoneNumber && remoteJid && !isGroup) {
         const contact = await this.findContact(instance, phoneNumber.split('@')[0]);
         if (contact && contact.identifier !== remoteJid) {
@@ -694,11 +694,11 @@ export class ChatwootService {
 
       // If lock already exists, wait until release or timeout
       if (await this.cache.has(lockKey)) {
-        this.logger.verbose(`Operação de criação já em andamento para ${remoteJid}, aguardando resultado...`);
+        this.logger.verbose(`Create operation already in progress for ${remoteJid}, waiting for result...`);
         const start = Date.now();
         while (await this.cache.has(lockKey)) {
           if (Date.now() - start > maxWaitTime) {
-            this.logger.warn(`Timeout aguardando lock para ${remoteJid}`);
+            this.logger.warn(`Timed out waiting for lock for ${remoteJid}`);
             break;
           }
           await new Promise((res) => setTimeout(res, this.LOCK_POLLING_DELAY_MS));
@@ -710,14 +710,14 @@ export class ChatwootService {
         }
       }
 
-      // Adquire lock
+      // Acquire lock
       await this.cache.set(lockKey, true, 30);
-      this.logger.verbose(`Bloqueio adquirido para: ${lockKey}`);
+      this.logger.verbose(`Lock acquired for: ${lockKey}`);
 
       try {
         /*
         Double check after lock
-        Utilizei uma nova verificação para evitar que outra thread execute entre o terminio do while e o set lock
+        Use a second verification to prevent another thread from running between the end of the while loop and set lock.
         */
         if (await this.cache.has(cacheKey)) {
           return (await this.cache.get(cacheKey)) as number;
@@ -1264,7 +1264,7 @@ export class ChatwootService {
       return messageSent;
     } catch (error) {
       this.logger.error(error);
-      throw error; // Re-throw para que o erro seja tratado pelo caller
+      throw error; // Re-throw so the caller can handle the error.
     }
   }
 
@@ -2179,17 +2179,17 @@ export class ChatwootService {
               const pixKeyType = (() => {
                 switch (pixSettings.key_type) {
                   case 'EVP':
-                    return 'Chave Aleatória';
+                    return 'Random Key';
                   case 'EMAIL':
-                    return 'E-mail';
+                    return 'Email';
                   case 'PHONE':
-                    return 'Telefone';
+                    return 'Phone';
                   default:
                     return pixSettings.key_type;
                 }
               })();
               const pixKey = pixSettings.key_type === 'PHONE' ? pixSettings.key.replace('+55', '') : pixSettings.key;
-              const content = `*${pixSettings.merchant_name}*\nChave PIX: ${pixKey} (${pixKeyType})`;
+              const content = `*${pixSettings.merchant_name}*\nPIX Key: ${pixKey} (${pixKeyType})`;
 
               const send = await this.createMessage(
                 instance,
@@ -2365,7 +2365,7 @@ export class ChatwootService {
         const editedMessageContent = (editedMessageContentRaw ?? '').trim();
 
         if (!editedMessageContent) {
-          this.logger.info('[CW.EDIT] Conteúdo vazio — ignorando (DELETE tratará se for revoke).');
+          this.logger.info('[CW.EDIT] Empty content — ignoring (DELETE will handle revoke).');
           return;
         }
 
@@ -2381,7 +2381,7 @@ export class ChatwootService {
         const messageType = key?.fromMe ? 'outgoing' : 'incoming';
 
         if (message && message.chatwootConversationId && message.chatwootMessageId) {
-          // Criar nova mensagem com formato: "Mensagem editada:\n\nteste1"
+          // Create a new message with the format: "Edited message:\n\ntest1"
           const editedText = `\n\n\`${i18next.t('cw.message.edited')}:\`\n\n${editedMessageContent}`;
 
           const send = await this.createMessage(
@@ -2468,7 +2468,7 @@ export class ChatwootService {
         const now = Date.now();
         const timeSinceLastNotification = now - (waInstance.lastConnectionNotification || 0);
 
-        // Se a conexão foi estabelecida via QR code, notifica imediatamente.
+        // If the connection was established via QR code, notify immediately.
         if (waInstance.qrCode && waInstance.qrCode.count > 0) {
           const msgConnection = i18next.t('cw.inbox.connected');
           await this.createBotMessage(instance, msgConnection, 'incoming');
@@ -2476,7 +2476,7 @@ export class ChatwootService {
           waInstance.lastConnectionNotification = now;
           chatwootImport.clearAll(instance);
         }
-        // Se não foi via QR code, verifica o throttling.
+        // If it was not via QR code, check throttling.
         else if (timeSinceLastNotification >= 30000) {
           const msgConnection = i18next.t('cw.inbox.connected');
           await this.createBotMessage(instance, msgConnection, 'incoming');
@@ -2490,8 +2490,8 @@ export class ChatwootService {
 
       if (event === 'qrcode.updated') {
         if (body.statusCode === 500) {
-          const erroQRcode = `🚨 ${i18next.t('qrlimitreached')}`;
-          return await this.createBotMessage(instance, erroQRcode, 'incoming');
+          const qrCodeError = `🚨 ${i18next.t('qrlimitreached')}`;
+          return await this.createBotMessage(instance, qrCodeError, 'incoming');
         } else {
           const fileData = Buffer.from(body?.qrcode.base64.replace('data:image/png;base64,', ''), 'base64');
 

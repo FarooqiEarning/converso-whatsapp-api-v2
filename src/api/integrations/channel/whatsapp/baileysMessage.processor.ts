@@ -19,12 +19,12 @@ export class BaileysMessageProcessor {
   }>();
 
   mount({ onMessageReceive }: MountProps) {
-    // Se já existe subscription, fazer cleanup primeiro
+    // If a subscription already exists, clean it up first.
     if (this.subscription && !this.subscription.closed) {
       this.subscription.unsubscribe();
     }
 
-    // Se o Subject foi completado, recriar
+    // If the Subject was completed, recreate it.
     if (this.messageSubject.closed) {
       this.processorLogs.warn('MessageSubject was closed, recreating...');
       this.messageSubject = new Subject<{
@@ -45,8 +45,8 @@ export class BaileysMessageProcessor {
             retryWhen((errors) =>
               errors.pipe(
                 tap((error) => this.processorLogs.warn(`Retrying message batch due to error: ${error.message}`)),
-                delay(1000), // 1 segundo de delay
-                take(3), // Máximo 3 tentativas
+                delay(1000), // 1-second delay
+                take(3), // Maximum 3 attempts
               ),
             ),
           ),

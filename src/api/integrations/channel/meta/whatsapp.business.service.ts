@@ -148,12 +148,12 @@ export class BusinessStartupService extends ChannelStartupService {
       urlServer = `${urlServer}/${version}/${id}`;
       const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` };
 
-      // Primeiro, obtenha a URL do arquivo
+      // First, obtain the file URL.
       let result = await axios.get(urlServer, { headers });
 
-      // Depois, baixe o arquivo usando a URL retornada
+      // Then download the file using the returned URL.
       result = await axios.get(result.data.url, {
-        headers: { Authorization: `Bearer ${this.token}` }, // Use apenas o token de autorização para download
+        headers: { Authorization: `Bearer ${this.token}` }, // Use only the authorization token for download.
         responseType: 'arraybuffer',
       });
 
@@ -179,7 +179,7 @@ export class BusinessStartupService extends ChannelStartupService {
     let content: any = {
       audioMessage: {
         ...message.audio,
-        ptt: message.audio.voice || false, // Define se é mensagem de voz
+        ptt: message.audio.voice || false, // Define whether this is a voice message.
       },
     };
     if (message.context) {
@@ -217,7 +217,7 @@ export class BusinessStartupService extends ChannelStartupService {
   }
 
   private messageTextJson(received: any) {
-    // Verificar que received y received.messages existen
+    // Verify that received and received.messages exist.
     if (!received || !received.messages || received.messages.length === 0) {
       this.logger.error('Error: received object or messages array is undefined or empty');
       return null;
@@ -226,9 +226,9 @@ export class BusinessStartupService extends ChannelStartupService {
     const message = received.messages[0];
     let content: any;
 
-    // Verificar si es un mensaje de tipo sticker, location u otro tipo que no tiene text
+    // Verify if this is a sticker, location, or other message type without text.
     if (!message.text) {
-      // Si no hay texto, manejamos diferente según el tipo de mensaje
+      // If there is no text, handle based on the message type.
       if (message.type === 'sticker') {
         content = { stickerMessage: {} };
       } else if (message.type === 'location') {
@@ -241,12 +241,12 @@ export class BusinessStartupService extends ChannelStartupService {
           },
         };
       } else {
-        // Para otros tipos de mensajes sin texto, creamos un contenido genérico
-        this.logger.log(`Mensaje de tipo ${message.type} sin campo text`);
+        // For other message types without text, create generic content.
+        this.logger.log(`Message type ${message.type} has no text field`);
         content = { [message.type + 'Message']: message[message.type] || {} };
       }
 
-      // Añadir contexto si existe
+      // Add context if it exists.
       if (message.context) {
         content = { ...content, contextInfo: { stanzaId: message.context.id } };
       }
@@ -254,7 +254,7 @@ export class BusinessStartupService extends ChannelStartupService {
       return content;
     }
 
-    // Si el mensaje tiene texto, procesamos normalmente
+    // If the message has text, process it normally.
     if (!received.metadata || !received.metadata.phone_number_id) {
       this.logger.error('Error: metadata or phone_number_id is undefined');
       return null;
@@ -320,7 +320,7 @@ export class BusinessStartupService extends ChannelStartupService {
 
       result +=
         `item1.TEL;waid=${contact.phones[0]?.wa_id}:${contact.phones[0].phone}\n` +
-        'item1.X-ABLabel:Celular\n' +
+        'item1.X-ABLabel:Mobile\n' +
         'END:VCARD';
 
       return result;
@@ -390,7 +390,7 @@ export class BusinessStartupService extends ChannelStartupService {
       if (received.contacts) pushName = received.contacts[0].profile.name;
 
       if (received.messages) {
-        const message = received.messages[0]; // Añadir esta línea para definir message
+        const message = received.messages[0]; // Define message for reuse below.
 
         const key = {
           id: message.id,
@@ -399,7 +399,7 @@ export class BusinessStartupService extends ChannelStartupService {
         };
 
         if (message.type === 'sticker') {
-          this.logger.log('Procesando mensaje de tipo sticker');
+          this.logger.log('Processing sticker message');
           messageRaw = {
             key,
             pushName,
@@ -430,7 +430,7 @@ export class BusinessStartupService extends ChannelStartupService {
             try {
               const message: any = received;
 
-              // Verificação adicional para garantir que há conteúdo de mídia real
+              // Additional verification to ensure there is real media content.
               const hasRealMedia = this.hasValidMediaContent(messageRaw);
 
               if (!hasRealMedia) {
@@ -444,7 +444,7 @@ export class BusinessStartupService extends ChannelStartupService {
                 const result = await axios.get(urlServer, { headers });
 
                 const buffer = await axios.get(result.data.url, {
-                  headers: { Authorization: `Bearer ${this.token}` }, // Use apenas o token de autorização para download
+                  headers: { Authorization: `Bearer ${this.token}` }, // Use only the authorization token for download.
                   responseType: 'arraybuffer',
                 });
 
@@ -480,7 +480,7 @@ export class BusinessStartupService extends ChannelStartupService {
                   }
                 }
 
-                // Para áudio, garantir extensão correta baseada no mimetype
+                // For audio, ensure the extension matches the mimetype.
                 if (mediaType === 'audio') {
                   if (mimetype.includes('ogg')) {
                     fileName = `${message.messages[0].id}.ogg`;
@@ -520,7 +520,7 @@ export class BusinessStartupService extends ChannelStartupService {
                   messageRaw.message.base64 = buffer.data.toString('base64');
                 }
 
-                // Processar OpenAI speech-to-text para áudio após o mediaUrl estar disponível
+                // Process OpenAI speech-to-text for audio after the mediaUrl is available.
                 if (this.configService.get<Openai>('OPENAI').ENABLED && mediaType === 'audio') {
                   const openAiDefaultSettings = await this.prismaRepository.openaiSetting.findFirst({
                     where: {
@@ -561,7 +561,7 @@ export class BusinessStartupService extends ChannelStartupService {
               messageRaw.message.base64 = buffer.toString('base64');
             }
 
-            // Processar OpenAI speech-to-text para áudio mesmo sem S3
+            // Process OpenAI speech-to-text for audio even without S3.
             if (this.configService.get<Openai>('OPENAI').ENABLED && message.type === 'audio') {
               let openAiBase64 = messageRaw.message.base64;
               if (!openAiBase64) {
@@ -895,19 +895,19 @@ export class BusinessStartupService extends ChannelStartupService {
 
   protected async eventHandler(content: any) {
     try {
-      // Registro para depuración
-      this.logger.log('Contenido recibido en eventHandler:');
+      // Debug logging.
+      this.logger.log('Content received in eventHandler:');
       this.logger.log(JSON.stringify(content, null, 2));
 
       const database = this.configService.get<Database>('DATABASE');
       const settings = await this.findSettings();
 
-      // Si hay mensajes, verificar primero el tipo
+      // If there are messages, check the type first.
       if (content.messages && content.messages.length > 0) {
         const message = content.messages[0];
-        this.logger.log(`Tipo de mensaje recibido: ${message.type}`);
+        this.logger.log(`Received message type: ${message.type}`);
 
-        // Verificamos el tipo de mensaje antes de procesarlo
+        // Verify the message type before processing.
         if (
           message.type === 'text' ||
           message.type === 'image' ||
@@ -921,19 +921,19 @@ export class BusinessStartupService extends ChannelStartupService {
           message.type === 'button' ||
           message.type === 'reaction'
         ) {
-          // Procesar el mensaje normalmente
+          // Process the message normally.
           this.messageHandle(content, database, settings);
         } else {
-          this.logger.warn(`Tipo de mensaje no reconocido: ${message.type}`);
+          this.logger.warn(`Unrecognized message type: ${message.type}`);
         }
       } else if (content.statuses) {
-        // Procesar actualizaciones de estado
+        // Process status updates.
         this.messageHandle(content, database, settings);
       } else {
-        this.logger.warn('No se encontraron mensajes ni estados en el contenido recibido');
+        this.logger.warn('No messages or statuses found in the received content');
       }
     } catch (error) {
-      this.logger.error('Error en eventHandler:');
+      this.logger.error('Error in eventHandler:');
       this.logger.error(error);
     }
   }
@@ -1556,7 +1556,7 @@ export class BusinessStartupService extends ChannelStartupService {
         contact.wuid = createJid(contact.phoneNumber);
       }
 
-      result += `item1.TEL;waid=${contact.wuid}:${contact.phoneNumber}\n` + 'item1.X-ABLabel:Celular\n' + 'END:VCARD';
+      result += `item1.TEL;waid=${contact.wuid}:${contact.phoneNumber}\n` + 'item1.X-ABLabel:Mobile\n' + 'END:VCARD';
 
       return result;
     };

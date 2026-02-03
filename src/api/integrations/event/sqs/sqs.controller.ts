@@ -215,7 +215,7 @@ export class SqsController extends EventController implements EventControllerInt
         const normalizedEvent =
           sqsConfig.GLOBAL_ENABLED && sqsConfig.GLOBAL_FORCE_SINGLE_QUEUE ? 'singlequeue' : event.toLowerCase();
         if (eventsFinded.includes(normalizedEvent)) {
-          this.logger.info(`A queue para o evento "${normalizedEvent}" já existe. Ignorando criação.`);
+          this.logger.info(`Queue for event "${normalizedEvent}" already exists. Skipping creation.`);
           continue;
         }
 
@@ -231,9 +231,9 @@ export class SqsController extends EventController implements EventControllerInt
           });
 
           const data = await this.sqs.send(createCommand);
-          this.logger.info(`Queue ${queueName} criada: ${data.QueueUrl}`);
+          this.logger.info(`Queue ${queueName} created: ${data.QueueUrl}`);
         } catch (err: any) {
-          this.logger.error(`Erro ao criar queue ${queueName}: ${err.message}`);
+          this.logger.error(`Error creating queue ${queueName}: ${err.message}`);
         }
 
         if (sqsConfig.GLOBAL_ENABLED && sqsConfig.GLOBAL_FORCE_SINGLE_QUEUE) {
@@ -253,21 +253,21 @@ export class SqsController extends EventController implements EventControllerInt
 
       const listData = await this.sqs.send(listCommand);
       if (listData.QueueUrls && listData.QueueUrls.length > 0) {
-        // Extrai o nome da fila a partir da URL
+        // Extract the queue name from the URL.
         existingQueues = listData.QueueUrls.map((queueUrl) => {
           const parts = queueUrl.split('/');
           return parts[parts.length - 1];
         });
       }
     } catch (error: any) {
-      this.logger.error(`Erro ao listar filas para ${prefixName}: ${error.message}`);
+      this.logger.error(`Error listing queues for ${prefixName}: ${error.message}`);
       return;
     }
 
-    // Mapeia os eventos já existentes nas filas: remove o prefixo e o sufixo ".fifo"
+    // Map existing queue events: remove prefix and ".fifo" suffix.
     return existingQueues
       .map((queueName) => {
-        // Espera-se que o nome seja `${instanceName}_${event}.fifo`
+        // Expected name format: `${instanceName}_${event}.fifo`
         if (queueName.startsWith(`${prefixName}_`) && queueName.endsWith('.fifo')) {
           return queueName.substring(prefixName.length + 1, queueName.length - 5).toLowerCase();
         }
@@ -276,7 +276,7 @@ export class SqsController extends EventController implements EventControllerInt
       .filter((event) => event !== '');
   }
 
-  // Para uma futura feature de exclusão forçada das queues
+  // For a future forced-queue deletion feature.
   private async removeQueuesByInstance(prefixName: string) {
     try {
       const listCommand = new ListQueuesCommand({

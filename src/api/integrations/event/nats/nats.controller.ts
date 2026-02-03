@@ -76,7 +76,7 @@ export class NatsController extends EventController implements EventControllerIn
       apikey: apiKey,
     };
 
-    // Instância específica
+    // Instance-specific
     if (instanceNats?.enabled) {
       if (Array.isArray(natsLocal) && natsLocal.includes(we)) {
         const subject = `${instanceName}.${event.toLowerCase()}`;
@@ -135,17 +135,17 @@ export class NatsController extends EventController implements EventControllerIn
 
       const subject = prefixKey ? `${prefixKey}.${event.toLowerCase()}` : event.toLowerCase();
 
-      // Criar uma subscription para cada evento
+      // Create a subscription for each event.
       try {
         const subscription = this.natsClient.subscribe(subject);
         this.logger.info(`Subscribed to: ${subject}`);
 
-        // Processar mensagens (exemplo básico)
+        // Process messages (basic example).
         (async () => {
           for await (const msg of subscription) {
             try {
               const data = JSON.parse(this.sc.decode(msg.data));
-              // Aqui você pode adicionar a lógica de processamento
+              // Add processing logic here if needed.
               this.logger.debug(`Received message on ${subject}:`);
               this.logger.debug(data);
             } catch (error) {

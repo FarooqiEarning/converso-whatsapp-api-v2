@@ -763,7 +763,7 @@ export class ChannelStartupService {
           "Message"."id" AS "lastMessageId",
           "Message"."key" AS "lastMessage_key",
           CASE
-            WHEN "Message"."key"->>'fromMe' = 'true' THEN 'Você'
+            WHEN "Message"."key"->>'fromMe' = 'true' THEN 'You'
             ELSE "Message"."pushName"
           END AS "lastMessagePushName",
           "Message"."participant" AS "lastMessageParticipant",
@@ -834,12 +834,12 @@ export class ChannelStartupService {
 
     const msg = message.message;
 
-    // Se só tem messageContextInfo, não é mídia válida
+    // If it only has messageContextInfo, it is not valid media.
     if (Object.keys(msg).length === 1 && Object.prototype.hasOwnProperty.call(msg, 'messageContextInfo')) {
       return false;
     }
 
-    // Verifica se tem pelo menos um tipo de mídia válido
+    // Verify it has at least one valid media type.
     const mediaTypes = [
       'imageMessage',
       'videoMessage',

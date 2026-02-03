@@ -225,7 +225,7 @@ export class WebhookController extends EventController implements EventControlle
         if (attempts > 0) {
           this.logger.log({
             local: `${origin}`,
-            message: `Sucesso no envio após ${attempts + 1} tentativas`,
+            message: `Successfully sent after ${attempts + 1} attempts`,
             url: baseURL,
           });
         }
@@ -238,7 +238,7 @@ export class WebhookController extends EventController implements EventControlle
         if (error?.response?.status && nonRetryableStatusCodes.includes(error.response.status)) {
           this.logger.error({
             local: `${origin}`,
-            message: `Erro não recuperável (${error.response.status}): ${error?.message}. Cancelando retentativas.`,
+            message: `Non-recoverable error (${error.response.status}): ${error?.message}. Cancelling retries.`,
             statusCode: error?.response?.status,
             url: baseURL,
             server_url: serverUrl,
@@ -248,7 +248,7 @@ export class WebhookController extends EventController implements EventControlle
 
         this.logger.error({
           local: `${origin}`,
-          message: `Tentativa ${attempts}/${maxRetryAttempts} falhou: ${isTimeout ? 'Timeout da requisição' : error?.message}`,
+          message: `Attempt ${attempts}/${maxRetryAttempts} failed: ${isTimeout ? 'Request timeout' : error?.message}`,
           hostName: error?.hostname,
           syscall: error?.syscall,
           code: error?.code,
@@ -275,7 +275,7 @@ export class WebhookController extends EventController implements EventControlle
 
         this.logger.log({
           local: `${origin}`,
-          message: `Aguardando ${nextDelay.toFixed(1)} segundos antes da próxima tentativa`,
+          message: `Waiting ${nextDelay.toFixed(1)} seconds before the next attempt`,
           url: baseURL,
         });
 
