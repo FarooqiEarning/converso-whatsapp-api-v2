@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+  api:
+    container_name: converso-whatsapp-api
+    image: evoapicloud/converso-whatsapp-api:latest
+    restart: always
+    depends_on:
+      - redis
+      - converso-whatsapp-api-postgres
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - converso-whatsapp-api_instances:/converso-whatsapp-api/instances
+    networks:
+      - converso-whatsapp-api-net
+      - dokploy-network
+    env_file:
+      - .env
+    expose:
+      - "8080"
+
+  frontend:
+    container_name: converso-whatsapp-api_frontend
+    image: evoapicloud/converso-whatsapp-api-manager:latest
+    restart: always
+    ports:
+      - "3000:80"
+    networks:
+      - converso-whatsapp-api-net
+
+  redis:
+    container_name: converso-whatsapp-api_redis
+    image: redis:latest
+    restart: always
+    command: >
+      redis-server --port 6379 --appendonly yes
+    volumes:
+      - converso-whatsapp-api_redis:/data
+    networks:
+      converso-whatsapp-api-net:
+        aliases:
+          - converso-whatsapp-api-redis
+      dokploy-network:
+        aliases:
+          - converso-whatsapp-api-redis
+    expose:
+      - "6379"
+
+  converso-whatsapp-api-postgres:
+    container_name: converso-whatsapp-api_postgres
+    image: postgres:15
+    restart: always
+    env_file:
+      - .env
+    command:
+      - postgres
+      - -c
+      - max_connections=1000
+      - -c
+      - listen_addresses=*
+    environment:
+      - POSTGRES_DB=${POSTGRES_DATABASE}
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - converso-whatsapp-api-net
+      - dokploy-network
+    expose:
+      - "5432"
+
+volumes:
+  converso-whatsapp-api_instances:
+  converso-whatsapp-api_redis:
+  postgres_data:
+
+networks:
+  converso-whatsapp-api-net:
+    name: converso-whatsapp-api-net
+    driver: bridge
+  dokploy-network:
+    external: true

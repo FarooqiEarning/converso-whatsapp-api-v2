@@ -1,0 +1,35 @@
+services:
+  api:
+    container_name: converso-whatsapp-api
+    image: converso-whatsapp-api/api:local
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - converso-whatsapp-api_instances:/converso-whatsapp-api/instances
+    networks:
+      - converso-whatsapp-api-net
+    env_file:
+      - .env
+    expose:
+      - 8080
+
+  frontend:
+    container_name: converso-whatsapp-api_frontend
+    image: converso-whatsapp-api/manager:local
+    build: ./converso-whatsapp-api-manager-v2
+    restart: always
+    ports:
+      - "3000:80"
+    networks:
+      - converso-whatsapp-api-net
+
+volumes:
+  converso-whatsapp-api_instances:
+
+
+networks:
+  converso-whatsapp-api-net:
+    name: converso-whatsapp-api-net
+    driver: bridge

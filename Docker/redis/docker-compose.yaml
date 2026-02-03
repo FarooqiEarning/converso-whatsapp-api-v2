@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  redis:
+    image: redis:latest
+    networks:
+      - converso-whatsapp-api-net
+    container_name: redis
+    command: >
+      redis-server --port 6379 --appendonly yes
+    volumes:
+      - converso-whatsapp-api_redis:/data
+    ports:
+      - 6379:6379
+
+volumes:
+  converso-whatsapp-api_redis:
+
+
+networks:
+  converso-whatsapp-api-net:
+    name: converso-whatsapp-api-net
+    driver: bridge

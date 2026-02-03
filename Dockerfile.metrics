@@ -1,0 +1,19 @@
+FROM evoapicloud/converso-whatsapp-api:latest AS base
+WORKDIR /converso-whatsapp-api
+
+# Copiamos apenas o necessário para recompilar o dist com as mudanças locais
+COPY tsconfig.json tsup.config.ts package.json ./
+COPY src ./src
+
+# Recompila usando os node_modules já presentes na imagem base
+RUN npm run build
+
+# Runtime final: reaproveita a imagem oficial e apenas sobrepõe o dist
+FROM evoapicloud/converso-whatsapp-api:latest AS final
+WORKDIR /converso-whatsapp-api
+COPY --from=base /converso-whatsapp-api/dist ./dist
+
+ENV PROMETHEUS_METRICS=true
+
+# Entrada original da imagem oficial já sobe o app em /converso-whatsapp-api
+
