@@ -3,7 +3,7 @@ import { PrismaRepository } from '@api/repository/repository.service';
 import { WAMonitoringService } from '@api/services/monitor.service';
 import { Integration } from '@api/types/wa.types';
 import { ConfigService, HttpServer } from '@config/env.config';
-import { converso-whatsapp-apiBot, converso-whatsapp-apiBotSetting, IntegrationSession } from '@prisma/client';
+import { conversoWhatsappApiBot, conversoWhatsappApiBotSetting, IntegrationSession } from '@prisma/client';
 import { sendTelemetry } from '@utils/sendTelemetry';
 import axios from 'axios';
 import { isURL } from 'class-validator';
@@ -11,7 +11,7 @@ import { isURL } from 'class-validator';
 import { BaseChatbotService } from '../../base-chatbot.service';
 import { OpenaiService } from '../../openai/services/openai.service';
 
-export class converso-whatsapp-apiBotService extends BaseChatbotService<converso-whatsapp-apiBot, converso-whatsapp-apiBotSetting> {
+export class conversoWhatsappApiBotService extends BaseChatbotService<conversoWhatsappApiBot, conversoWhatsappApiBotSetting> {
   private openaiService: OpenaiService;
 
   constructor(
@@ -20,7 +20,7 @@ export class converso-whatsapp-apiBotService extends BaseChatbotService<converso
     configService: ConfigService,
     openaiService: OpenaiService,
   ) {
-    super(waMonitor, prismaRepository, 'converso-whatsapp-apiBotService', configService);
+    super(waMonitor, prismaRepository, 'conversoWhatsappApiBotService', configService);
     this.openaiService = openaiService;
   }
 
@@ -28,17 +28,17 @@ export class converso-whatsapp-apiBotService extends BaseChatbotService<converso
    * Get the bot type identifier
    */
   protected getBotType(): string {
-    return 'converso-whatsapp-api';
+    return 'conversoWhatsappApi';
   }
 
   /**
-   * Send a message to the converso-whatsapp-api Bot API
+   * Send a message to the conversoWhatsappApi Bot API
    */
   protected async sendMessageToBot(
     instance: any,
     session: IntegrationSession,
-    settings: converso-whatsapp-apiBotSetting,
-    bot: converso-whatsapp-apiBot,
+    settings: conversoWhatsappApiBotSetting,
+    bot: conversoWhatsappApiBot,
     remoteJid: string,
     pushName: string,
     content: string,
@@ -62,13 +62,13 @@ export class converso-whatsapp-apiBotService extends BaseChatbotService<converso
 
       if (this.isAudioMessage(content) && msg) {
         try {
-          this.logger.debug(`[converso-whatsapp-apiBot] Downloading audio for Whisper transcription`);
+          this.logger.debug(`[conversoWhatsappApiBot] Downloading audio for Whisper transcription`);
           const transcription = await this.openaiService.speechToText(msg, instance);
           if (transcription) {
             payload.query = `[audio] ${transcription}`;
           }
         } catch (err) {
-          this.logger.error(`[converso-whatsapp-apiBot] Failed to transcribe audio: ${err}`);
+          this.logger.error(`[conversoWhatsappApiBot] Failed to transcribe audio: ${err}`);
         }
       }
 
@@ -102,7 +102,7 @@ export class converso-whatsapp-apiBotService extends BaseChatbotService<converso
       const endpoint = bot.apiUrl;
 
       if (!endpoint) {
-        this.logger.error('No converso-whatsapp-api Bot endpoint defined');
+        this.logger.error('No conversoWhatsappApi Bot endpoint defined');
         return;
       }
 
@@ -151,7 +151,7 @@ export class converso-whatsapp-apiBotService extends BaseChatbotService<converso
         // Use the base class method that handles splitMessages functionality
         await this.sendMessageWhatsApp(instance, remoteJid, message, settings, linkPreview);
       } else {
-        this.logger.warn(`[converso-whatsapp-apiBot] No message content received from bot response`);
+        this.logger.warn(`[conversoWhatsappApiBot] No message content received from bot response`);
       }
 
       // Send telemetry

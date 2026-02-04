@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  engineType = "client"
 }
 
 datasource db {
@@ -102,8 +103,8 @@ model Instance {
   Dify                    Dify[]
   DifySetting             DifySetting?
   IntegrationSession      IntegrationSession[]
-  converso-whatsapp-apiBot            converso-whatsapp-apiBot[]
-  converso-whatsapp-apiBotSetting     converso-whatsapp-apiBotSetting?
+  conversoWhatsappApiBot            conversoWhatsappApiBot[]
+  conversoWhatsappApiBotSetting     conversoWhatsappApiBotSetting?
   Flowise                 Flowise[]
   FlowiseSetting          FlowiseSetting?
   Pusher                  Pusher?
@@ -560,7 +561,7 @@ model DifySetting {
   instanceId      String    @unique
 }
 
-model converso-whatsapp-apiBot {
+model conversoWhatsappApiBot {
   id                  String                @id @default(cuid())
   enabled             Boolean               @default(true) @db.Boolean
   description         String?               @db.VarChar(255)
@@ -584,10 +585,10 @@ model converso-whatsapp-apiBot {
   updatedAt           DateTime              @updatedAt @db.Timestamp
   Instance            Instance              @relation(fields: [instanceId], references: [id], onDelete: Cascade)
   instanceId          String
-  converso-whatsapp-apiBotSetting converso-whatsapp-apiBotSetting[]
+  conversoWhatsappApiBotSetting conversoWhatsappApiBotSetting[]
 }
 
-model converso-whatsapp-apiBotSetting {
+model conversoWhatsappApiBotSetting {
   id              String        @id @default(cuid())
   expire          Int?          @default(0) @db.Integer
   keywordFinish   String?       @db.VarChar(100)
@@ -602,7 +603,7 @@ model converso-whatsapp-apiBotSetting {
   timePerChar     Int?          @default(50) @db.Integer
   createdAt       DateTime?     @default(now()) @db.Timestamp
   updatedAt       DateTime      @updatedAt @db.Timestamp
-  Fallback        converso-whatsapp-apiBot? @relation(fields: [botIdFallback], references: [id])
+  Fallback        conversoWhatsappApiBot? @relation(fields: [botIdFallback], references: [id])
   botIdFallback   String?       @db.VarChar(100)
   Instance        Instance      @relation(fields: [instanceId], references: [id], onDelete: Cascade)
   instanceId      String        @unique

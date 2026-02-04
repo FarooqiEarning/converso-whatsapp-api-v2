@@ -3,7 +3,7 @@ import { PrismaRepository } from '@api/repository/repository.service';
 import {
   difyController,
   evoaiController,
-  converso-whatsapp-apiBotController,
+  newConversoWhatsappApiBotController,
   flowiseController,
   n8nController,
   openaiController,
@@ -91,7 +91,7 @@ export class ChatbotController {
       pushName,
       isIntegration,
     };
-    converso-whatsapp-apiBotController.emit(emitData);
+    newConversoWhatsappApiBotController.emit(emitData);
 
     typebotController.emit(emitData);
 

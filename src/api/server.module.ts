@@ -14,7 +14,7 @@ import { SendMessageController } from './controllers/sendMessage.controller';
 import { SettingsController } from './controllers/settings.controller';
 import { TemplateController } from './controllers/template.controller';
 import { ChannelController } from './integrations/channel/channel.controller';
-import { converso-whatsapp-apiController } from './integrations/channel/converso-whatsapp-api/converso-whatsapp-api.controller';
+import { conversoWhatsappApiController } from './integrations/channel/conversoWhatsappApi/conversoWhatsappApi.controller';
 import { MetaController } from './integrations/channel/meta/meta.controller';
 import { BaileysController } from './integrations/channel/whatsapp/baileys.controller';
 import { ChatbotController } from './integrations/chatbot/chatbot.controller';
@@ -24,8 +24,8 @@ import { DifyController } from './integrations/chatbot/dify/controllers/dify.con
 import { DifyService } from './integrations/chatbot/dify/services/dify.service';
 import { EvoaiController } from './integrations/chatbot/evoai/controllers/evoai.controller';
 import { EvoaiService } from './integrations/chatbot/evoai/services/evoai.service';
-import { converso-whatsapp-apiBotController } from './integrations/chatbot/converso-whatsapp-apiBot/controllers/converso-whatsapp-apiBot.controller';
-import { converso-whatsapp-apiBotService } from './integrations/chatbot/converso-whatsapp-apiBot/services/converso-whatsapp-apiBot.service';
+import { conversoWhatsappApiBotController } from './integrations/chatbot/conversoWhatsappApiBot/controllers/conversoWhatsappApiBot.controller';
+import { conversoWhatsappApiBotService } from './integrations/chatbot/conversoWhatsappApiBot/services/conversoWhatsappApiBot.service';
 import { FlowiseController } from './integrations/chatbot/flowise/controllers/flowise.controller';
 import { FlowiseService } from './integrations/chatbot/flowise/services/flowise.service';
 import { N8nController } from './integrations/chatbot/n8n/controllers/n8n.controller';
@@ -112,7 +112,7 @@ export const chatbotController = new ChatbotController(prismaRepository, waMonit
 export const channelController = new ChannelController(prismaRepository, waMonitor);
 
 // channels
-export const converso-whatsapp-apiController = new converso-whatsapp-apiController(prismaRepository, waMonitor);
+export const newConversoWhatsappApiController = new conversoWhatsappApiController(prismaRepository, waMonitor);
 export const metaController = new MetaController(prismaRepository, waMonitor);
 export const baileysController = new BaileysController(waMonitor);
 
@@ -126,8 +126,8 @@ export const typebotController = new TypebotController(typebotService, prismaRep
 const difyService = new DifyService(waMonitor, prismaRepository, configService, openaiService);
 export const difyController = new DifyController(difyService, prismaRepository, waMonitor);
 
-const converso-whatsapp-apiBotService = new converso-whatsapp-apiBotService(waMonitor, prismaRepository, configService, openaiService);
-export const converso-whatsapp-apiBotController = new converso-whatsapp-apiBotController(converso-whatsapp-apiBotService, prismaRepository, waMonitor);
+const newConversoWhatsappApiBotService = new conversoWhatsappApiBotService(waMonitor, prismaRepository, configService, openaiService);
+export const newConversoWhatsappApiBotController = new conversoWhatsappApiBotController(newConversoWhatsappApiBotService, prismaRepository, waMonitor);
 
 const flowiseService = new FlowiseService(waMonitor, prismaRepository, configService, openaiService);
 export const flowiseController = new FlowiseController(flowiseService, prismaRepository, waMonitor);

@@ -9,7 +9,7 @@ export type HttpServer = {
   PORT: number;
   URL: string;
   DISABLE_DOCS: boolean;
-  DISABLE_MANAGER: boolean;
+  DISABLE_ADMIN_PANEL: boolean;
 };
 
 export type HttpMethods = 'POST' | 'GET' | 'PUT' | 'DELETE';
@@ -461,7 +461,7 @@ export class ConfigService {
         PORT: Number.parseInt(process.env.SERVER_PORT) || 8080,
         URL: process.env.SERVER_URL,
         DISABLE_DOCS: process.env?.SERVER_DISABLE_DOCS === 'true',
-        DISABLE_MANAGER: process.env?.SERVER_DISABLE_MANAGER === 'true',
+        DISABLE_ADMIN_PANEL: process.env?.SERVER_DISABLE_ADMIN_PANEL === 'true',
       },
       CORS: {
         ORIGIN: process.env.CORS_ORIGIN?.split(',') || ['*'],

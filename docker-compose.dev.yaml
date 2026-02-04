@@ -17,8 +17,8 @@ services:
 
   frontend:
     container_name: converso-whatsapp-api_frontend
-    image: converso-whatsapp-api/manager:local
-    build: ./converso-whatsapp-api-manager-v2
+    image: converso-whatsapp-api/admin-panel:local
+    build: ./converso-whatsapp-api-admin-panel-v2
     restart: always
     ports:
       - "3000:80"

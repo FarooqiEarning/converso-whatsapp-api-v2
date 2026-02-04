@@ -4,8 +4,8 @@ import { Logger } from '@config/logger.config';
 
 import { ChannelController, ChannelControllerInterface } from '../channel.controller';
 
-export class converso-whatsapp-apiController extends ChannelController implements ChannelControllerInterface {
-  private readonly logger = new Logger('converso-whatsapp-apiController');
+export class conversoWhatsappApiController extends ChannelController implements ChannelControllerInterface {
+  private readonly logger = new Logger('conversoWhatsappApiController');
 
   constructor(prismaRepository: PrismaRepository, waMonitor: WAMonitoringService) {
     super(prismaRepository, waMonitor);
@@ -17,7 +17,7 @@ export class converso-whatsapp-apiController extends ChannelController implement
     const numberId = data.numberId;
 
     if (!numberId) {
-      this.logger.error('WebhookService -> receiveWebhookconverso-whatsapp-api -> numberId not found');
+      this.logger.error('WebhookService -> receiveWebhookconversoWhatsappApi -> numberId not found');
       return;
     }
 

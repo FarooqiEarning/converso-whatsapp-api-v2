@@ -80,9 +80,9 @@ createBucket();
 
 const uploadFile = async (fileName: string, file: Buffer | Transform | Readable, size: number, metadata: Metadata) => {
   if (minioClient) {
-    const objectName = join('converso-whatsapp-api', fileName);
+    const objectName = join('conversoWhatsappApi', fileName);
     try {
-      metadata['custom-header-application'] = 'converso-whatsapp-api';
+      metadata['custom-header-application'] = 'conversoWhatsappApi';
       return await minioClient.putObject(bucketName, objectName, file, size, metadata);
     } catch (error) {
       logger.error(error);
@@ -94,7 +94,7 @@ const uploadFile = async (fileName: string, file: Buffer | Transform | Readable,
 const getObjectUrl = async (fileName: string, expiry?: number) => {
   if (minioClient) {
     try {
-      const objectName = join('converso-whatsapp-api', fileName);
+      const objectName = join('conversoWhatsappApi', fileName);
       if (expiry) {
         return await minioClient.presignedGetObject(bucketName, objectName, expiry);
       }
@@ -115,7 +115,7 @@ const uploadTempFile = async (
   if (minioClient) {
     const objectName = join(folder, fileName);
     try {
-      metadata['custom-header-application'] = 'converso-whatsapp-api';
+      metadata['custom-header-application'] = 'conversoWhatsappApi';
       return await minioClient.putObject(bucketName, objectName, file, size, metadata);
     } catch (error) {
       logger.error(error);

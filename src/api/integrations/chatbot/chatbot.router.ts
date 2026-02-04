@@ -5,7 +5,7 @@ import { TypebotRouter } from '@api/integrations/chatbot/typebot/routes/typebot.
 import { Router } from 'express';
 
 import { EvoaiRouter } from './evoai/routes/evoai.router';
-import { converso-whatsapp-apiBotRouter } from './converso-whatsapp-apiBot/routes/converso-whatsapp-apiBot.router';
+import { conversoWhatsappApiBotRouter } from './conversoWhatsappApiBot/routes/conversoWhatsappApiBot.router';
 import { FlowiseRouter } from './flowise/routes/flowise.router';
 import { N8nRouter } from './n8n/routes/n8n.router';
 
@@ -15,7 +15,7 @@ export class ChatbotRouter {
   constructor(...guards: any[]) {
     this.router = Router();
 
-    this.router.use('/converso-whatsapp-apiBot', new converso-whatsapp-apiBotRouter(...guards).router);
+    this.router.use('/conversoWhatsappApiBot', new conversoWhatsappApiBotRouter(...guards).router);
     this.router.use('/chatwoot', new ChatwootRouter(...guards).router);
     this.router.use('/typebot', new TypebotRouter(...guards).router);
     this.router.use('/openai', new OpenaiRouter(...guards).router);

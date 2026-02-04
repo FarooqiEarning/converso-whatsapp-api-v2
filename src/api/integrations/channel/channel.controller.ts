@@ -8,7 +8,7 @@ import { ConfigService } from '@config/env.config';
 import { BadRequestException } from '@exceptions';
 import EventEmitter2 from 'eventemitter2';
 
-import { converso-whatsapp-apiStartupService } from './converso-whatsapp-api/converso-whatsapp-api.channel.service';
+import { conversoWhatsappApiStartupService } from './conversoWhatsappApi/conversoWhatsappApi.channel.service';
 import { BusinessStartupService } from './meta/whatsapp.business.service';
 import { BaileysStartupService } from './whatsapp/whatsapp.baileys.service';
 
@@ -68,8 +68,8 @@ export class ChannelController {
       );
     }
 
-    if (instanceData.integration === Integration.converso-whatsapp-api) {
-      return new converso-whatsapp-apiStartupService(
+    if (instanceData.integration === Integration.conversoWhatsappApi) {
+      return new conversoWhatsappApiStartupService(
         data.configService,
         data.eventEmitter,
         data.prismaRepository,

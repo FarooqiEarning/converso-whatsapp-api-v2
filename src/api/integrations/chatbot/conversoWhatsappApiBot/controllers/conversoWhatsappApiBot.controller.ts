@@ -1,27 +1,27 @@
 import { PrismaRepository } from '@api/repository/repository.service';
 import { WAMonitoringService } from '@api/services/monitor.service';
 import { Logger } from '@config/logger.config';
-import { converso-whatsapp-apiBot, IntegrationSession } from '@prisma/client';
+import { conversoWhatsappApiBot, IntegrationSession } from '@prisma/client';
 
 import { BaseChatbotController } from '../../base-chatbot.controller';
-import { converso-whatsapp-apiBotDto } from '../dto/converso-whatsapp-apiBot.dto';
-import { converso-whatsapp-apiBotService } from '../services/converso-whatsapp-apiBot.service';
+import { conversoWhatsappApiBotDto } from '../dto/conversoWhatsappApiBot.dto';
+import { conversoWhatsappApiBotService } from '../services/conversoWhatsappApiBot.service';
 
-export class converso-whatsapp-apiBotController extends BaseChatbotController<converso-whatsapp-apiBot, converso-whatsapp-apiBotDto> {
+export class conversoWhatsappApiBotController extends BaseChatbotController<conversoWhatsappApiBot, conversoWhatsappApiBotDto> {
   constructor(
-    private readonly converso-whatsapp-apiBotService: converso-whatsapp-apiBotService,
+    private readonly conversoWhatsappApiBotService: conversoWhatsappApiBotService,
     prismaRepository: PrismaRepository,
     waMonitor: WAMonitoringService,
   ) {
     super(prismaRepository, waMonitor);
 
-    this.botRepository = this.prismaRepository.converso-whatsapp-apiBot;
-    this.settingsRepository = this.prismaRepository.converso-whatsapp-apiBotSetting;
+    this.botRepository = this.prismaRepository.conversoWhatsappApiBot;
+    this.settingsRepository = this.prismaRepository.conversoWhatsappApiBotSetting;
     this.sessionRepository = this.prismaRepository.integrationSession;
   }
 
-  public readonly logger = new Logger('converso-whatsapp-apiBotController');
-  protected readonly integrationName = 'converso-whatsapp-apiBot';
+  public readonly logger = new Logger('conversoWhatsappApiBotController');
+  protected readonly integrationName = 'conversoWhatsappApiBot';
 
   integrationEnabled = true; // Set to true by default or use config value if available
   botRepository: any;
@@ -40,10 +40,10 @@ export class converso-whatsapp-apiBotController extends BaseChatbotController<co
   }
 
   protected getIntegrationType(): string {
-    return 'converso-whatsapp-api';
+    return 'conversoWhatsappApi';
   }
 
-  protected getAdditionalBotData(data: converso-whatsapp-apiBotDto): Record<string, any> {
+  protected getAdditionalBotData(data: conversoWhatsappApiBotDto): Record<string, any> {
     return {
       apiUrl: data.apiUrl,
       apiKey: data.apiKey,
@@ -51,7 +51,7 @@ export class converso-whatsapp-apiBotController extends BaseChatbotController<co
   }
 
   // Implementation for bot-specific updates
-  protected getAdditionalUpdateFields(data: converso-whatsapp-apiBotDto): Record<string, any> {
+  protected getAdditionalUpdateFields(data: conversoWhatsappApiBotDto): Record<string, any> {
     return {
       apiUrl: data.apiUrl,
       apiKey: data.apiKey,
@@ -62,7 +62,7 @@ export class converso-whatsapp-apiBotController extends BaseChatbotController<co
   protected async validateNoDuplicatesOnUpdate(
     botId: string,
     instanceId: string,
-    data: converso-whatsapp-apiBotDto,
+    data: conversoWhatsappApiBotDto,
   ): Promise<void> {
     const checkDuplicate = await this.botRepository.findFirst({
       where: {
@@ -76,7 +76,7 @@ export class converso-whatsapp-apiBotController extends BaseChatbotController<co
     });
 
     if (checkDuplicate) {
-      throw new Error('converso-whatsapp-api Bot already exists');
+      throw new Error('conversoWhatsappApi Bot already exists');
     }
   }
 
@@ -84,13 +84,13 @@ export class converso-whatsapp-apiBotController extends BaseChatbotController<co
   protected async processBot(
     instance: any,
     remoteJid: string,
-    bot: converso-whatsapp-apiBot,
+    bot: conversoWhatsappApiBot,
     session: IntegrationSession,
     settings: any,
     content: string,
     pushName?: string,
     msg?: any,
   ) {
-    await this.converso-whatsapp-apiBotService.process(instance, remoteJid, bot, session, settings, content, pushName, msg);
+    await this.conversoWhatsappApiBotService.process(instance, remoteJid, bot, session, settings, content, pushName, msg);
   }
 }

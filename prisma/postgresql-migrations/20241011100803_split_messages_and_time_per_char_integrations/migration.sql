@@ -7,11 +7,11 @@ ALTER TABLE "DifySetting" ADD COLUMN     "splitMessages" BOOLEAN DEFAULT false,
 ADD COLUMN     "timePerChar" INTEGER DEFAULT 50;
 
 -- AlterTable
-ALTER TABLE "converso-whatsapp-apiBot" ADD COLUMN     "splitMessages" BOOLEAN DEFAULT false,
+ALTER TABLE "conversoWhatsappApiBot" ADD COLUMN     "splitMessages" BOOLEAN DEFAULT false,
 ADD COLUMN     "timePerChar" INTEGER DEFAULT 50;
 
 -- AlterTable
-ALTER TABLE "converso-whatsapp-apiBotSetting" ADD COLUMN     "splitMessages" BOOLEAN DEFAULT false,
+ALTER TABLE "conversoWhatsappApiBotSetting" ADD COLUMN     "splitMessages" BOOLEAN DEFAULT false,
 ADD COLUMN     "timePerChar" INTEGER DEFAULT 50;
 
 -- AlterTable

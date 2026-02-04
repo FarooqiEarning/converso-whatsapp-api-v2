@@ -560,7 +560,11 @@ export class BaileysStartupService extends ChannelStartupService {
     const provider = this.configService.get<ProviderSession>('PROVIDER');
 
     if (provider?.ENABLED) {
-      return await this.authStateProvider.authStateProvider(this.instance.id);
+      const authState = await this.authStateProvider.authStateProvider(this.instance.id);
+      if (authState) {
+        return authState;
+      }
+      this.logger.error(['Auth state provider enabled but failed to initialize', `instanceId=${this.instance?.id}`]);
     }
 
     if (cache?.REDIS.ENABLED && cache?.REDIS.SAVE_INSTANCES) {
@@ -571,6 +575,11 @@ export class BaileysStartupService extends ChannelStartupService {
     if (db.SAVE_DATA.INSTANCE) {
       return await useMultiFileAuthStatePrisma(this.instance.id, this.cache);
     }
+
+    throw new InternalServerErrorException(
+      'Auth state backend not configured.',
+      'Enable PROVIDER_ENABLED=true, or CACHE_REDIS_ENABLED=true with CACHE_REDIS_SAVE_INSTANCES=true, or DATABASE_SAVE_DATA_INSTANCE=true.',
+    );
   }
 
   private async createClient(number?: string): Promise<WASocket> {

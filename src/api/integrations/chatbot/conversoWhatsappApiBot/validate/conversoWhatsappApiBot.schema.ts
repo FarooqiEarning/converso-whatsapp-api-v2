@@ -20,7 +20,7 @@ const isNotEmpty = (...propertyNames: string[]): JSONSchema7 => {
   };
 };
 
-export const converso-whatsapp-apiBotSchema: JSONSchema7 = {
+export const conversoWhatsappApiBotSchema: JSONSchema7 = {
   $id: v4(),
   type: 'object',
   properties: {
@@ -47,7 +47,7 @@ export const converso-whatsapp-apiBotSchema: JSONSchema7 = {
   ...isNotEmpty('enabled', 'apiUrl', 'triggerType'),
 };
 
-export const converso-whatsapp-apiBotStatusSchema: JSONSchema7 = {
+export const conversoWhatsappApiBotStatusSchema: JSONSchema7 = {
   $id: v4(),
   type: 'object',
   properties: {
@@ -58,7 +58,7 @@ export const converso-whatsapp-apiBotStatusSchema: JSONSchema7 = {
   ...isNotEmpty('remoteJid', 'status'),
 };
 
-export const converso-whatsapp-apiBotSettingSchema: JSONSchema7 = {
+export const conversoWhatsappApiBotSettingSchema: JSONSchema7 = {
   $id: v4(),
   type: 'object',
   properties: {
@@ -103,7 +103,7 @@ export const converso-whatsapp-apiBotSettingSchema: JSONSchema7 = {
   ),
 };
 
-export const converso-whatsapp-apiBotIgnoreJidSchema: JSONSchema7 = {
+export const conversoWhatsappApiBotIgnoreJidSchema: JSONSchema7 = {
   $id: v4(),
   type: 'object',
   properties: {

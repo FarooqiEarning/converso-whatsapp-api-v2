@@ -163,7 +163,7 @@ DROP TABLE `GenericBot`;
 DROP TABLE `GenericSetting`;
 
 -- CreateTable
-CREATE TABLE `converso-whatsapp-apiBot` (
+CREATE TABLE `conversoWhatsappApiBot` (
     `id` VARCHAR(191) NOT NULL,
     `enabled` BOOLEAN NOT NULL DEFAULT true,
     `description` VARCHAR(255) NULL,
@@ -189,7 +189,7 @@ CREATE TABLE `converso-whatsapp-apiBot` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `converso-whatsapp-apiBotSetting` (
+CREATE TABLE `conversoWhatsappApiBotSetting` (
     `id` VARCHAR(191) NOT NULL,
     `expire` INTEGER NULL DEFAULT 0,
     `keywordFinish` VARCHAR(100) NULL,
@@ -205,15 +205,15 @@ CREATE TABLE `converso-whatsapp-apiBotSetting` (
     `botIdFallback` VARCHAR(100) NULL,
     `instanceId` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `converso-whatsapp-apiBotSetting_instanceId_key`(`instanceId`),
+    UNIQUE INDEX `conversoWhatsappApiBotSetting_instanceId_key`(`instanceId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `converso-whatsapp-apiBot` ADD CONSTRAINT `converso-whatsapp-apiBot_instanceId_fkey` FOREIGN KEY (`instanceId`) REFERENCES `Instance`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `conversoWhatsappApiBot` ADD CONSTRAINT `conversoWhatsappApiBot_instanceId_fkey` FOREIGN KEY (`instanceId`) REFERENCES `Instance`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `converso-whatsapp-apiBotSetting` ADD CONSTRAINT `converso-whatsapp-apiBotSetting_botIdFallback_fkey` FOREIGN KEY (`botIdFallback`) REFERENCES `converso-whatsapp-apiBot`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `conversoWhatsappApiBotSetting` ADD CONSTRAINT `conversoWhatsappApiBotSetting_botIdFallback_fkey` FOREIGN KEY (`botIdFallback`) REFERENCES `conversoWhatsappApiBot`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `converso-whatsapp-apiBotSetting` ADD CONSTRAINT `converso-whatsapp-apiBotSetting_instanceId_fkey` FOREIGN KEY (`instanceId`) REFERENCES `Instance`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `conversoWhatsappApiBotSetting` ADD CONSTRAINT `conversoWhatsappApiBotSetting_instanceId_fkey` FOREIGN KEY (`instanceId`) REFERENCES `Instance`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

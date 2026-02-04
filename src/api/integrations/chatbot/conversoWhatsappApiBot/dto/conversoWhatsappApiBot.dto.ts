@@ -1,10 +1,10 @@
 import { BaseChatbotDto, BaseChatbotSettingDto } from '../../base-chatbot.dto';
 
-export class converso-whatsapp-apiBotDto extends BaseChatbotDto {
+export class conversoWhatsappApiBotDto extends BaseChatbotDto {
   apiUrl: string;
   apiKey: string;
 }
 
-export class converso-whatsapp-apiBotSettingDto extends BaseChatbotSettingDto {
+export class conversoWhatsappApiBotSettingDto extends BaseChatbotSettingDto {
   botIdFallback?: string;
 }

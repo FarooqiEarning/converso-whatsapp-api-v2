@@ -119,10 +119,10 @@ if (metricsConfig.ENABLED) {
     const serverUrl = serverConfig.URL || '';
 
     // environment info
-    lines.push('# HELP converso-whatsapp-api_environment_info Environment information');
-    lines.push('# TYPE converso-whatsapp-api_environment_info gauge');
+    lines.push('# HELP conversoWhatsappApi_environment_info Environment information');
+    lines.push('# TYPE conversoWhatsappApi_environment_info gauge');
     lines.push(
-      `converso-whatsapp-api_environment_info{version="${escapeLabel(packageJson.version)}",clientName="${escapeLabel(
+      `conversoWhatsappApi_environment_info{version="${escapeLabel(packageJson.version)}",clientName="${escapeLabel(
         clientName,
       )}",serverUrl="${escapeLabel(serverUrl)}"} 1`,
     );
@@ -131,15 +131,15 @@ if (metricsConfig.ENABLED) {
     const instanceEntries = Object.entries(instances);
 
     // total instances
-    lines.push('# HELP converso-whatsapp-api_instances_total Total number of instances');
-    lines.push('# TYPE converso-whatsapp-api_instances_total gauge');
-    lines.push(`converso-whatsapp-api_instances_total ${instanceEntries.length}`);
+    lines.push('# HELP conversoWhatsappApi_instances_total Total number of instances');
+    lines.push('# TYPE conversoWhatsappApi_instances_total gauge');
+    lines.push(`conversoWhatsappApi_instances_total ${instanceEntries.length}`);
 
     // per-instance status
-    lines.push('# HELP converso-whatsapp-api_instance_up 1 if instance state is open, else 0');
-    lines.push('# TYPE converso-whatsapp-api_instance_up gauge');
-    lines.push('# HELP converso-whatsapp-api_instance_state Instance state as a labelled metric');
-    lines.push('# TYPE converso-whatsapp-api_instance_state gauge');
+    lines.push('# HELP conversoWhatsappApi_instance_up 1 if instance state is open, else 0');
+    lines.push('# TYPE conversoWhatsappApi_instance_up gauge');
+    lines.push('# HELP conversoWhatsappApi_instance_state Instance state as a labelled metric');
+    lines.push('# TYPE conversoWhatsappApi_instance_state gauge');
 
     for (const [name, instance] of instanceEntries) {
       const state = instance?.connectionStatus?.state || 'unknown';
@@ -147,10 +147,10 @@ if (metricsConfig.ENABLED) {
       const up = state === 'open' ? 1 : 0;
 
       lines.push(
-        `converso-whatsapp-api_instance_up{instance="${escapeLabel(name)}",integration="${escapeLabel(integration)}"} ${up}`,
+        `conversoWhatsappApi_instance_up{instance="${escapeLabel(name)}",integration="${escapeLabel(integration)}"} ${up}`,
       );
       lines.push(
-        `converso-whatsapp-api_instance_state{instance="${escapeLabel(name)}",integration="${escapeLabel(
+        `conversoWhatsappApi_instance_state{instance="${escapeLabel(name)}",integration="${escapeLabel(
           integration,
         )}",state="${escapeLabel(state)}"} 1`,
       );
@@ -160,7 +160,7 @@ if (metricsConfig.ENABLED) {
   });
 }
 
-if (!serverConfig.DISABLE_MANAGER) router.use('/manager', new ViewsRouter().router);
+if (!serverConfig.DISABLE_ADMIN_PANEL) router.use('/admin-panel', new ViewsRouter().router);
 
 router.get('/assets/*', (req, res) => {
   const fileName = req.params[0];
@@ -170,7 +170,7 @@ router.get('/assets/*', (req, res) => {
     return res.status(403).send('Forbidden');
   }
 
-  const basePath = path.join(process.cwd(), 'manager', 'dist');
+  const basePath = path.join(process.cwd(), 'admin-panel', 'dist');
   const assetsPath = path.join(basePath, 'assets');
   const filePath = path.join(assetsPath, fileName);
 
@@ -198,10 +198,7 @@ router
       status: HttpStatus.OK,
       message: 'Welcome to the Converso Whatsapp Api, it is working!',
       version: packageJson.version,
-      clientName: databaseConfig.CONNECTION.CLIENT_NAME,
-      manager: !serverConfig.DISABLE_MANAGER ? `${req.protocol}://${req.get('host')}/manager` : undefined,
-      documentation: `https://doc.converso-whatsapp-api.com`,
-      whatsappWebVersion: (await fetchLatestWaWebVersion({})).version.join('.'),
+      whatsappVersion: (await fetchLatestWaWebVersion({})).version.join('.'),
     });
   })
   .post('/verify-creds', authGuard['apikey'], async (req, res) => {

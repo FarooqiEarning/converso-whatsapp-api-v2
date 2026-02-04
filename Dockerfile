@@ -18,7 +18,7 @@ RUN npm ci --silent
 COPY ./src ./src
 COPY ./public ./public
 COPY ./prisma ./prisma
-COPY ./manager ./manager
+COPY ./admin-panel ./admin-panel
 COPY ./.env.example ./.env
 COPY ./runWithProvider.js ./
 
@@ -46,7 +46,7 @@ COPY --from=builder /converso-whatsapp-api/package-lock.json ./package-lock.json
 COPY --from=builder /converso-whatsapp-api/node_modules ./node_modules
 COPY --from=builder /converso-whatsapp-api/dist ./dist
 COPY --from=builder /converso-whatsapp-api/prisma ./prisma
-COPY --from=builder /converso-whatsapp-api/manager ./manager
+COPY --from=builder /converso-whatsapp-api/admin-panel ./admin-panel
 COPY --from=builder /converso-whatsapp-api/public ./public
 COPY --from=builder /converso-whatsapp-api/.env ./.env
 COPY --from=builder /converso-whatsapp-api/Docker ./Docker

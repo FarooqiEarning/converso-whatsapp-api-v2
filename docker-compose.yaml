@@ -22,7 +22,7 @@ services:
 
   frontend:
     container_name: converso-whatsapp-api_frontend
-    image: evoapicloud/converso-whatsapp-api-manager:latest
+    image: evoapicloud/converso-whatsapp-api-admin-panel:latest
     restart: always
     ports:
       - "3000:80"

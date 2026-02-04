@@ -236,8 +236,8 @@ export class ChatwootService {
         '123456',
         inboxId,
         false,
-        organization ? organization : 'converso-whatsapp-apiAPI',
-        logo ? logo : 'https://converso-whatsapp-api.com/files/converso-whatsapp-api-favicon.png',
+        organization ? organization : 'conversoWhatsappApiAPI',
+        logo ? logo : 'https://conversoWhatsappApi.com/files/conversoWhatsappApi-favicon.png',
       )) as any);
 
     if (!contact) {

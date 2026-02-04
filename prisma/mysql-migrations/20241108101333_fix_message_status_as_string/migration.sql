@@ -11,10 +11,10 @@
   - You are about to alter the column `updatedAt` on the `Dify` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
   - You are about to alter the column `createdAt` on the `DifySetting` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
   - You are about to alter the column `updatedAt` on the `DifySetting` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
-  - You are about to alter the column `createdAt` on the `converso-whatsapp-apiBot` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
-  - You are about to alter the column `updatedAt` on the `converso-whatsapp-apiBot` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
-  - You are about to alter the column `createdAt` on the `converso-whatsapp-apiBotSetting` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
-  - You are about to alter the column `updatedAt` on the `converso-whatsapp-apiBotSetting` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
+  - You are about to alter the column `createdAt` on the `conversoWhatsappApiBot` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
+  - You are about to alter the column `updatedAt` on the `conversoWhatsappApiBot` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
+  - You are about to alter the column `createdAt` on the `conversoWhatsappApiBotSetting` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
+  - You are about to alter the column `updatedAt` on the `conversoWhatsappApiBotSetting` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
   - You are about to alter the column `createdAt` on the `Flowise` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
   - You are about to alter the column `updatedAt` on the `Flowise` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
   - You are about to alter the column `createdAt` on the `FlowiseSetting` table. The data in that column could be lost. The data in that column will be cast from `Timestamp(0)` to `Timestamp`.
@@ -82,13 +82,13 @@ ALTER TABLE `DifySetting` ADD COLUMN `splitMessages` BOOLEAN NULL DEFAULT false,
     MODIFY `updatedAt` TIMESTAMP NOT NULL;
 
 -- AlterTable
-ALTER TABLE `converso-whatsapp-apiBot` ADD COLUMN `splitMessages` BOOLEAN NULL DEFAULT false,
+ALTER TABLE `conversoWhatsappApiBot` ADD COLUMN `splitMessages` BOOLEAN NULL DEFAULT false,
     ADD COLUMN `timePerChar` INTEGER NULL DEFAULT 50,
     MODIFY `createdAt` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     MODIFY `updatedAt` TIMESTAMP NOT NULL;
 
 -- AlterTable
-ALTER TABLE `converso-whatsapp-apiBotSetting` ADD COLUMN `splitMessages` BOOLEAN NULL DEFAULT false,
+ALTER TABLE `conversoWhatsappApiBotSetting` ADD COLUMN `splitMessages` BOOLEAN NULL DEFAULT false,
     ADD COLUMN `timePerChar` INTEGER NULL DEFAULT 50,
     MODIFY `createdAt` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     MODIFY `updatedAt` TIMESTAMP NOT NULL;
