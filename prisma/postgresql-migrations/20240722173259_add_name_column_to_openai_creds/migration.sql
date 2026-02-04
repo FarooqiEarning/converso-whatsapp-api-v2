@@ -6,7 +6,7 @@
 */
 -- AlterTable
 ALTER TABLE "OpenaiCreds" ADD COLUMN     "name" VARCHAR(255),
-ALTER COLUMN "apiKey" DROP NOT NULL;
+ALTER COLUMN "instanceCode" DROP NOT NULL;
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OpenaiCreds_name_key" ON "OpenaiCreds"("name");

@@ -26,7 +26,7 @@ CREATE TABLE "Dify" (
     "enabled" BOOLEAN NOT NULL DEFAULT true,
     "botType" "DifyBotType" NOT NULL,
     "apiUrl" VARCHAR(255),
-    "apiKey" VARCHAR(255),
+    "instanceCode" VARCHAR(255),
     "expire" INTEGER DEFAULT 0,
     "keywordFinish" VARCHAR(100),
     "delayMessage" INTEGER,

@@ -34,8 +34,8 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
   /**
    * Initialize the OpenAI client with the provided API key
    */
-  protected initClient(apiKey: string) {
-    this.client = new OpenAI({ apiKey });
+  protected initClient(instanceCode: string) {
+    this.client = new OpenAI({ instanceCode });
     return this.client;
   }
 
@@ -70,7 +70,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
         }
 
         // Initialize OpenAI client for transcription
-        this.initClient(creds.apiKey);
+        this.initClient(creds.instanceCode);
 
         // Transcribe the audio
         const transcription = await this.speechToText(msg, instance);
@@ -102,7 +102,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
         }
 
         // Initialize OpenAI client
-        this.initClient(creds.apiKey);
+        this.initClient(creds.instanceCode);
       }
 
       // Handle keyword finish
@@ -208,7 +208,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
         return;
       }
 
-      this.initClient(creds.apiKey);
+      this.initClient(creds.instanceCode);
     }
 
     try {
@@ -414,7 +414,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
         return 'Error: OpenAI credentials not found';
       }
 
-      this.initClient(creds.apiKey);
+      this.initClient(creds.instanceCode);
     }
 
     // Check if model is defined
@@ -720,12 +720,12 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
     formData.append('model', 'whisper-1');
     formData.append('language', lang);
 
-    const apiKey = creds?.apiKey || this.configService.get<OpenaiConfig>('OPENAI').API_KEY_GLOBAL;
+    const instanceCode = creds?.instanceCode || this.configService.get<OpenaiConfig>('OPENAI').API_KEY_GLOBAL;
 
     const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${instanceCode}`,
       },
     });
 

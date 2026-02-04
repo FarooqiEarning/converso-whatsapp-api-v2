@@ -1,6 +1,6 @@
 {
   "name": "converso-whatsapp-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Converso WhatsApp API is a powerful and flexible API for WhatsApp that enables businesses to automate and streamline their communication with customers through WhatsApp. It offers a wide range of features, including message sending and receiving, media handling, contact management, and more.",
   "main": "./dist/main.js",
   "type": "commonjs",

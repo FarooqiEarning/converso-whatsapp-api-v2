@@ -47,7 +47,7 @@ export class EvoaiController extends BaseChatbotController<EvoaiModel, EvoaiDto>
   protected getAdditionalBotData(data: EvoaiDto): Record<string, any> {
     return {
       agentUrl: data.agentUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
@@ -55,7 +55,7 @@ export class EvoaiController extends BaseChatbotController<EvoaiModel, EvoaiDto>
   protected getAdditionalUpdateFields(data: EvoaiDto): Record<string, any> {
     return {
       agentUrl: data.agentUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
@@ -68,7 +68,7 @@ export class EvoaiController extends BaseChatbotController<EvoaiModel, EvoaiDto>
         },
         instanceId: instanceId,
         agentUrl: data.agentUrl,
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 
@@ -94,7 +94,7 @@ export class EvoaiController extends BaseChatbotController<EvoaiModel, EvoaiDto>
       where: {
         instanceId: instanceId,
         agentUrl: data.agentUrl,
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 

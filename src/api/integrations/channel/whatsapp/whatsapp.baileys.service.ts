@@ -3121,7 +3121,7 @@ export class BaileysStartupService extends ChannelStartupService {
       }
 
       const { data } = await axios.post(audioConverterConfig.API_URL, formData, {
-        headers: { ...formData.getHeaders(), apikey: audioConverterConfig.API_KEY },
+        headers: { ...formData.getHeaders(), instanceCode: audioConverterConfig.API_KEY },
       });
 
       if (!data.audio) {

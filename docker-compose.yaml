@@ -9,7 +9,7 @@ services:
       - redis
       - converso-whatsapp-api-postgres
     ports:
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:7871:7871"
     volumes:
       - converso-whatsapp-api_instances:/converso-whatsapp-api/instances
     networks:
@@ -18,7 +18,7 @@ services:
     env_file:
       - .env
     expose:
-      - "8080"
+      - "7871"
 
   frontend:
     container_name: converso-whatsapp-api_frontend

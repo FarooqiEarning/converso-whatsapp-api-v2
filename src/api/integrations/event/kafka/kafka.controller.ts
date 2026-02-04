@@ -260,7 +260,7 @@ export class KafkaController extends EventController implements EventControllerI
     serverUrl,
     dateTime,
     sender,
-    apiKey,
+    instanceCode,
     integration,
     extra,
   }: EmitData): Promise<void> {
@@ -292,7 +292,7 @@ export class KafkaController extends EventController implements EventControllerI
       server_url: serverUrl,
       date_time: dateTime,
       sender,
-      apikey: apiKey,
+      instanceCode: instanceCode,
       timestamp: Date.now(),
     };
 

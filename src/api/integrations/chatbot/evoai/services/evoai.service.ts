@@ -145,7 +145,7 @@ export class EvoaiService extends BaseChatbotService<Evoai, EvoaiSetting> {
             fromMe: msg?.key?.fromMe,
             instanceName: instance.instanceName,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
-            apiKey: instance.token,
+            instanceCode: instance.token,
           },
         },
       };
@@ -170,7 +170,7 @@ export class EvoaiService extends BaseChatbotService<Evoai, EvoaiSetting> {
 
       const response = await axios.post(endpoint, payload, {
         headers: {
-          'x-api-key': evoai.apiKey,
+          'x-api-key': evoai.instanceCode,
           'Content-Type': 'application/json',
         },
       });

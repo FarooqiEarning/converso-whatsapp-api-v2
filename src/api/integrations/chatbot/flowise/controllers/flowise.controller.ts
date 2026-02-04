@@ -47,14 +47,14 @@ export class FlowiseController extends BaseChatbotController<FlowiseModel, Flowi
   protected getAdditionalBotData(data: FlowiseDto): Record<string, any> {
     return {
       apiUrl: data.apiUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
   protected getAdditionalUpdateFields(data: FlowiseDto): Record<string, any> {
     return {
       apiUrl: data.apiUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
@@ -64,7 +64,7 @@ export class FlowiseController extends BaseChatbotController<FlowiseModel, Flowi
         id: { not: botId },
         instanceId: instanceId,
         apiUrl: data.apiUrl,
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 
@@ -104,7 +104,7 @@ export class FlowiseController extends BaseChatbotController<FlowiseModel, Flowi
       where: {
         instanceId: instanceId,
         apiUrl: data.apiUrl,
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 

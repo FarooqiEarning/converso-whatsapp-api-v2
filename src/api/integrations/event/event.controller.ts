@@ -11,7 +11,7 @@ export type EmitData = {
   serverUrl: string;
   dateTime: string;
   sender: string;
-  apiKey?: string;
+  instanceCode?: string;
   local?: boolean;
   integration?: string[];
   extra?: Record<string, any>;
@@ -28,7 +28,7 @@ export interface EventControllerInterface {
     serverUrl,
     dateTime,
     sender,
-    apiKey,
+    instanceCode,
     local,
     extra,
   }: EmitData): Promise<void>;

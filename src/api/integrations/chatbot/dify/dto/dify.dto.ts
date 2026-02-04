@@ -5,7 +5,7 @@ import { BaseChatbotDto, BaseChatbotSettingDto } from '../../base-chatbot.dto';
 export class DifyDto extends BaseChatbotDto {
   botType?: $Enums.DifyBotType;
   apiUrl?: string;
-  apiKey?: string;
+  instanceCode?: string;
 }
 
 export class DifySettingDto extends BaseChatbotSettingDto {

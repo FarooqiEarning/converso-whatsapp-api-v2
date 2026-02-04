@@ -120,7 +120,7 @@ export class EventManager {
     serverUrl: string;
     dateTime: string;
     sender: string;
-    apiKey?: string;
+    instanceCode?: string;
     local?: boolean;
     integration?: string[];
     extra?: Record<string, any>;

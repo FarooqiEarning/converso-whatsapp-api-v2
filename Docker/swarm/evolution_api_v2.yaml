@@ -132,7 +132,7 @@ services:
         - traefik.http.routers.conversoWhatsappApi_v2.tls.certresolver=letsencryptresolver
         - traefik.http.routers.conversoWhatsappApi_v2.priority=1
         - traefik.http.routers.conversoWhatsappApi_v2.service=conversoWhatsappApi_v2
-        - traefik.http.services.conversoWhatsappApi_v2.loadbalancer.server.port=8080
+        - traefik.http.services.conversoWhatsappApi_v2.loadbalancer.server.port=7871
         - traefik.http.services.conversoWhatsappApi_v2.loadbalancer.passHostHeader=true
 
 volumes:

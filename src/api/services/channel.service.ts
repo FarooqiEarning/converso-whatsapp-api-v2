@@ -446,7 +446,7 @@ export class ChannelStartupService {
 
     const expose = this.configService.get<Auth>('AUTHENTICATION').EXPOSE_IN_FETCH_INSTANCES;
 
-    const instanceApikey = this.token || 'Apikey not found';
+    const instanceinstanceCode = this.token || 'instanceCode not found';
 
     await eventManager.emit({
       instanceName: this.instance.name,
@@ -456,7 +456,7 @@ export class ChannelStartupService {
       serverUrl,
       dateTime: now,
       sender: this.wuid,
-      apiKey: expose && instanceApikey ? instanceApikey : null,
+      instanceCode: expose && instanceinstanceCode ? instanceinstanceCode : null,
       local,
       integration,
       extra,

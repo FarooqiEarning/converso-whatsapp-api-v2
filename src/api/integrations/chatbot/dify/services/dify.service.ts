@@ -69,7 +69,7 @@ export class DifyService extends BaseChatbotService<Dify, DifySetting> {
             pushName: pushName,
             instanceName: instance.instanceName,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
-            apiKey: instance.token,
+            instanceCode: instance.token,
           },
           query: processedContent,
           response_mode: 'blocking',
@@ -117,7 +117,7 @@ export class DifyService extends BaseChatbotService<Dify, DifySetting> {
 
         const response = await axios.post(endpoint, payload, {
           headers: {
-            Authorization: `Bearer ${dify.apiKey}`,
+            Authorization: `Bearer ${dify.instanceCode}`,
           },
         });
 
@@ -152,7 +152,7 @@ export class DifyService extends BaseChatbotService<Dify, DifySetting> {
             remoteJid: remoteJid,
             instanceName: instance.instanceName,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
-            apiKey: instance.token,
+            instanceCode: instance.token,
           },
           response_mode: 'blocking',
           conversation_id: session.sessionId === remoteJid ? undefined : session.sessionId,
@@ -199,7 +199,7 @@ export class DifyService extends BaseChatbotService<Dify, DifySetting> {
 
         const response = await axios.post(endpoint, payload, {
           headers: {
-            Authorization: `Bearer ${dify.apiKey}`,
+            Authorization: `Bearer ${dify.instanceCode}`,
           },
         });
 
@@ -233,7 +233,7 @@ export class DifyService extends BaseChatbotService<Dify, DifySetting> {
             pushName: pushName,
             instanceName: instance.instanceName,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
-            apiKey: instance.token,
+            instanceCode: instance.token,
           },
           query: processedContent,
           response_mode: 'streaming',
@@ -272,7 +272,7 @@ export class DifyService extends BaseChatbotService<Dify, DifySetting> {
 
         const response = await axios.post(endpoint, payload, {
           headers: {
-            Authorization: `Bearer ${dify.apiKey}`,
+            Authorization: `Bearer ${dify.instanceCode}`,
           },
         });
 

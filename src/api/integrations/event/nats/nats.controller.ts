@@ -45,7 +45,7 @@ export class NatsController extends EventController implements EventControllerIn
     serverUrl,
     dateTime,
     sender,
-    apiKey,
+    instanceCode,
     integration,
     extra,
   }: EmitData): Promise<void> {
@@ -73,7 +73,7 @@ export class NatsController extends EventController implements EventControllerIn
       server_url: serverUrl,
       date_time: dateTime,
       sender,
-      apikey: apiKey,
+      instanceCode: instanceCode,
     };
 
     // Instance-specific

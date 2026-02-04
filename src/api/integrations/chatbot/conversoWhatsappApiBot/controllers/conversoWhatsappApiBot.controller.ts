@@ -46,7 +46,7 @@ export class conversoWhatsappApiBotController extends BaseChatbotController<conv
   protected getAdditionalBotData(data: conversoWhatsappApiBotDto): Record<string, any> {
     return {
       apiUrl: data.apiUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
@@ -54,7 +54,7 @@ export class conversoWhatsappApiBotController extends BaseChatbotController<conv
   protected getAdditionalUpdateFields(data: conversoWhatsappApiBotDto): Record<string, any> {
     return {
       apiUrl: data.apiUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
@@ -71,7 +71,7 @@ export class conversoWhatsappApiBotController extends BaseChatbotController<conv
         },
         instanceId: instanceId,
         apiUrl: data.apiUrl,
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 

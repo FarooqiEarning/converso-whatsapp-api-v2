@@ -258,10 +258,10 @@ export type EventsPusher = {
   TYPEBOT_CHANGE_STATUS: boolean;
 };
 
-export type ApiKey = { KEY: string };
+export type instanceCode = { KEY: string };
 
 export type Auth = {
-  API_KEY: ApiKey;
+  API_KEY: instanceCode;
   EXPOSE_IN_FETCH_INSTANCES: boolean;
 };
 
@@ -449,7 +449,7 @@ export class ConfigService {
     this.env.PRODUCTION = process.env?.NODE_ENV === 'PROD';
     if (process.env?.DOCKER_ENV === 'true') {
       this.env.SERVER.TYPE = process.env.SERVER_TYPE as 'http' | 'http';
-      this.env.SERVER.PORT = Number.parseInt(process.env.SERVER_PORT) || 8080;
+      this.env.SERVER.PORT = Number.parseInt(process.env.SERVER_PORT) || 7871;
     }
   }
 
@@ -458,7 +458,7 @@ export class ConfigService {
       SERVER: {
         NAME: process.env?.SERVER_NAME || 'converso-whatsapp-api',
         TYPE: (process.env.SERVER_TYPE as 'http' | 'https') || 'http',
-        PORT: Number.parseInt(process.env.SERVER_PORT) || 8080,
+        PORT: Number.parseInt(process.env.SERVER_PORT) || 7871,
         URL: process.env.SERVER_URL,
         DISABLE_DOCS: process.env?.SERVER_DISABLE_DOCS === 'true',
         DISABLE_ADMIN_PANEL: process.env?.SERVER_DISABLE_ADMIN_PANEL === 'true',

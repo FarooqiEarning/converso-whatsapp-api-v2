@@ -91,7 +91,7 @@ export class SqsController extends EventController implements EventControllerInt
     serverUrl,
     dateTime,
     sender,
-    apiKey,
+    instanceCode,
     integration,
     extra,
   }: EmitData): Promise<void> {
@@ -138,7 +138,7 @@ export class SqsController extends EventController implements EventControllerInt
           server_url: serverUrl,
           date_time: dateTime,
           sender,
-          apikey: apiKey,
+          instanceCode: instanceCode,
         };
 
         const jsonStr = JSON.stringify(message);

@@ -62,7 +62,7 @@ export class WebhookController extends EventController implements EventControlle
     serverUrl,
     dateTime,
     sender,
-    apiKey,
+    instanceCode,
     local,
     integration,
     extra,
@@ -99,7 +99,7 @@ export class WebhookController extends EventController implements EventControlle
       date_time: dateTime,
       sender,
       server_url: serverUrl,
-      apikey: apiKey,
+      instanceCode: instanceCode,
     };
 
     if (local && instance?.enabled) {

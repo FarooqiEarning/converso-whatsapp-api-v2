@@ -4,7 +4,7 @@ CREATE TABLE `Evoai` (
     `enabled` BOOLEAN NOT NULL DEFAULT true,
     `description` VARCHAR(255),
     `agentUrl` VARCHAR(255),
-    `apiKey` VARCHAR(255),
+    `instanceCode` VARCHAR(255),
     `expire` INTEGER DEFAULT 0,
     `keywordFinish` VARCHAR(100),
     `delayMessage` INTEGER,

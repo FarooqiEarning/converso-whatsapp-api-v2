@@ -312,13 +312,13 @@ CREATE TABLE `Media` (
 CREATE TABLE `OpenaiCreds` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(255) NULL,
-    `apiKey` VARCHAR(255) NULL,
+    `instanceCode` VARCHAR(255) NULL,
     `createdAt` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updatedAt` TIMESTAMP NOT NULL,
     `instanceId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `OpenaiCreds_name_key`(`name`),
-    UNIQUE INDEX `OpenaiCreds_apiKey_key`(`apiKey`),
+    UNIQUE INDEX `OpenaiCreds_instanceCode_key`(`instanceCode`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -417,7 +417,7 @@ CREATE TABLE `Dify` (
     `description` VARCHAR(255) NULL,
     `botType` ENUM('chatBot', 'textGenerator', 'agent', 'workflow') NOT NULL,
     `apiUrl` VARCHAR(255) NULL,
-    `apiKey` VARCHAR(255) NULL,
+    `instanceCode` VARCHAR(255) NULL,
     `expire` INTEGER NULL DEFAULT 0,
     `keywordFinish` VARCHAR(100) NULL,
     `delayMessage` INTEGER NULL,

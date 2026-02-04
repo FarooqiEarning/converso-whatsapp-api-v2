@@ -64,7 +64,7 @@ export class FlowiseService extends BaseChatbotService<FlowiseModel> {
           pushName: pushName,
           instanceName: instance.instanceName,
           serverUrl: this.configService.get<HttpServer>('SERVER').URL,
-          apiKey: instance.token,
+          instanceCode: instance.token,
         },
       },
     };
@@ -116,10 +116,10 @@ export class FlowiseService extends BaseChatbotService<FlowiseModel> {
       'Content-Type': 'application/json',
     };
 
-    if (bot.apiKey) {
+    if (bot.instanceCode) {
       headers = {
         ...headers,
-        Authorization: `Bearer ${bot.apiKey}`,
+        Authorization: `Bearer ${bot.instanceCode}`,
       };
     }
 

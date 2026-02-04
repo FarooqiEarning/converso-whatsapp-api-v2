@@ -118,7 +118,7 @@ export class PusherController extends EventController implements EventController
     serverUrl,
     dateTime,
     sender,
-    apiKey,
+    instanceCode,
     local,
     integration,
     extra,
@@ -142,7 +142,7 @@ export class PusherController extends EventController implements EventController
       date_time: dateTime,
       sender,
       server_url: serverUrl,
-      apikey: apiKey,
+      instanceCode: instanceCode,
     };
     if (event == 'qrcode.updated') {
       delete pusherData.data.qrcode.base64;

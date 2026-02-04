@@ -4,7 +4,7 @@ ALTER TABLE "Message" ADD COLUMN     "openaiSessionId" TEXT;
 -- CreateTable
 CREATE TABLE "OpenaiCreds" (
     "id" TEXT NOT NULL,
-    "apiKey" VARCHAR(255) NOT NULL,
+    "instanceCode" VARCHAR(255) NOT NULL,
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP NOT NULL,
     "instanceId" TEXT NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE "OpenaiSetting" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "OpenaiCreds_apiKey_key" ON "OpenaiCreds"("apiKey");
+CREATE UNIQUE INDEX "OpenaiCreds_instanceCode_key" ON "OpenaiCreds"("instanceCode");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OpenaiCreds_instanceId_key" ON "OpenaiCreds"("instanceId");

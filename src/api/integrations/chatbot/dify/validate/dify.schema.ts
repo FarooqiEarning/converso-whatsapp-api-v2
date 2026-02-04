@@ -28,7 +28,7 @@ export const difySchema: JSONSchema7 = {
     description: { type: 'string' },
     botType: { type: 'string', enum: ['chatBot', 'textGenerator', 'agent', 'workflow'] },
     apiUrl: { type: 'string' },
-    apiKey: { type: 'string' },
+    instanceCode: { type: 'string' },
     triggerType: { type: 'string', enum: ['all', 'keyword', 'none', 'advanced'] },
     triggerOperator: { type: 'string', enum: ['equals', 'contains', 'startsWith', 'endsWith', 'regex'] },
     triggerValue: { type: 'string' },

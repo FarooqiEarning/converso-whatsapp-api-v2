@@ -45,18 +45,18 @@ export class WebsocketController extends EventController implements EventControl
             return callback(null, true);
           }
 
-          const apiKey = params.get('apikey') || (req.headers.apikey as string);
+          const instanceCode = params.get('instanceCode') || (req.headers.instanceCode as string);
 
-          if (!apiKey) {
-            this.logger.error('Connection rejected: apiKey not provided');
-            return callback('apiKey is required', false);
+          if (!instanceCode) {
+            this.logger.error('Connection rejected: instanceCode not provided');
+            return callback('instanceCode is required', false);
           }
 
-          const instance = await this.prismaRepository.instance.findFirst({ where: { token: apiKey } });
+          const instance = await this.prismaRepository.instance.findFirst({ where: { token: instanceCode } });
 
           if (!instance) {
             const globalToken = configService.get<Auth>('AUTHENTICATION').API_KEY.KEY;
-            if (apiKey !== globalToken) {
+            if (instanceCode !== globalToken) {
               this.logger.error('Connection rejected: invalid global token');
               return callback('Invalid global token', false);
             }
@@ -116,7 +116,7 @@ export class WebsocketController extends EventController implements EventControl
     serverUrl,
     dateTime,
     sender,
-    apiKey,
+    instanceCode,
     integration,
     extra,
   }: EmitData): Promise<void> {
@@ -138,7 +138,7 @@ export class WebsocketController extends EventController implements EventControl
       server_url: serverUrl,
       date_time: dateTime,
       sender,
-      apikey: apiKey,
+      instanceCode: instanceCode,
     };
 
     if (configService.get<Websocket>('WEBSOCKET')?.GLOBAL_EVENTS) {

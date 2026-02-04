@@ -48,7 +48,7 @@ export class DifyController extends BaseChatbotController<DifyModel, DifyDto> {
     return {
       botType: data.botType,
       apiUrl: data.apiUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
@@ -57,7 +57,7 @@ export class DifyController extends BaseChatbotController<DifyModel, DifyDto> {
     return {
       botType: data.botType,
       apiUrl: data.apiUrl,
-      apiKey: data.apiKey,
+      instanceCode: data.instanceCode,
     };
   }
 
@@ -71,7 +71,7 @@ export class DifyController extends BaseChatbotController<DifyModel, DifyDto> {
         instanceId: instanceId,
         botType: data.botType,
         apiUrl: data.apiUrl,
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 
@@ -98,7 +98,7 @@ export class DifyController extends BaseChatbotController<DifyModel, DifyDto> {
         instanceId: instanceId,
         botType: data.botType,
         apiUrl: data.apiUrl,
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 

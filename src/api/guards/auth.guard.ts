@@ -7,9 +7,9 @@ import { NextFunction, Request, Response } from 'express';
 
 const logger = new Logger('GUARD');
 
-async function apikey(req: Request, _: Response, next: NextFunction) {
+async function instanceCode(req: Request, _: Response, next: NextFunction) {
   const env = configService.get<Auth>('AUTHENTICATION').API_KEY;
-  const key = req.get('apikey');
+  const key = req.get('instanceCode');
   const db = configService.get<Database>('DATABASE');
 
   if (!key) {
@@ -50,4 +50,4 @@ async function apikey(req: Request, _: Response, next: NextFunction) {
   throw new UnauthorizedException();
 }
 
-export const authGuard = { apikey };
+export const authGuard = { instanceCode };

@@ -647,7 +647,7 @@ export class conversoWhatsappApiStartupService extends ChannelStartupService {
         const response = await axios.post(audioConverterConfig.API_URL, formData, {
           headers: {
             ...formData.getHeaders(),
-            apikey: audioConverterConfig.API_KEY,
+            instanceCode: audioConverterConfig.API_KEY,
           },
         });
 

@@ -55,7 +55,7 @@ export class InstanceRouter extends RouterBroker {
         return res.status(HttpStatus.OK).json(response);
       })
       .get(this.routerPath('fetchInstances', false), ...guards, async (req, res) => {
-        const key = req.get('apikey');
+        const key = req.get('instanceCode');
 
         const response = await this.dataValidate<InstanceDto>({
           request: req,

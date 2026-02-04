@@ -427,7 +427,7 @@ model Media {
 model OpenaiCreds {
   id              String         @id @default(cuid())
   name            String?        @unique @db.VarChar(255)
-  apiKey          String?        @unique @db.VarChar(255)
+  instanceCode          String?        @unique @db.VarChar(255)
   createdAt       DateTime?      @default(dbgenerated("CURRENT_TIMESTAMP")) @db.Timestamp
   updatedAt       DateTime       @updatedAt @db.Timestamp
   Instance        Instance       @relation(fields: [instanceId], references: [id], onDelete: Cascade)
@@ -513,7 +513,7 @@ model Dify {
   description     String?          @db.VarChar(255)
   botType         DifyBotType
   apiUrl          String?          @db.VarChar(255)
-  apiKey          String?          @db.VarChar(255)
+  instanceCode          String?          @db.VarChar(255)
   expire          Int?             @default(0) @db.Int
   keywordFinish   String?          @db.VarChar(100)
   delayMessage    Int?             @db.Int
@@ -561,7 +561,7 @@ model conversoWhatsappApiBot {
   enabled             Boolean               @default(true)
   description         String?               @db.VarChar(255)
   apiUrl              String?               @db.VarChar(255)
-  apiKey              String?               @db.VarChar(255)
+  instanceCode              String?               @db.VarChar(255)
   expire              Int?                  @default(0) @db.Int
   keywordFinish       String?               @db.VarChar(100)
   delayMessage        Int?                  @db.Int
@@ -609,7 +609,7 @@ model Flowise {
   enabled         Boolean          @default(true)
   description     String?          @db.VarChar(255)
   apiUrl          String?          @db.VarChar(255)
-  apiKey          String?          @db.VarChar(255)
+  instanceCode          String?          @db.VarChar(255)
   expire          Int?             @default(0) @db.Int
   keywordFinish   String?          @db.VarChar(100)
   delayMessage    Int?             @db.Int
@@ -714,7 +714,7 @@ model Evoai {
   enabled         Boolean          @default(true) @db.TinyInt()
   description     String?          @db.VarChar(255)
   agentUrl        String?          @db.VarChar(255)
-  apiKey          String?          @db.VarChar(255)
+  instanceCode          String?          @db.VarChar(255)
   expire          Int?             @default(0) @db.Int
   keywordFinish   String?          @db.VarChar(100)
   delayMessage    Int?             @db.Int

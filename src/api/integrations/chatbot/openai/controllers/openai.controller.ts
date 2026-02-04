@@ -232,17 +232,17 @@ export class OpenaiController extends BaseChatbotController<OpenaiBot, OpenaiDto
       })
       .then((instance) => instance.id);
 
-    if (!data.apiKey) throw new BadRequestException('API Key is required');
+    if (!data.instanceCode) throw new BadRequestException('API Key is required');
     if (!data.name) throw new BadRequestException('Name is required');
 
     // Check if API key already exists
-    const existingApiKey = await this.credsRepository.findFirst({
+    const existinginstanceCode = await this.credsRepository.findFirst({
       where: {
-        apiKey: data.apiKey,
+        instanceCode: data.instanceCode,
       },
     });
 
-    if (existingApiKey) {
+    if (existinginstanceCode) {
       throw new BadRequestException('This API key is already registered. Please use a different API key.');
     }
 
@@ -262,7 +262,7 @@ export class OpenaiController extends BaseChatbotController<OpenaiBot, OpenaiDto
       const creds = await this.credsRepository.create({
         data: {
           name: data.name,
-          apiKey: data.apiKey,
+          instanceCode: data.instanceCode,
           instanceId: instanceId,
         },
       });
@@ -433,7 +433,7 @@ export class OpenaiController extends BaseChatbotController<OpenaiBot, OpenaiDto
 
     if (!instanceId) throw new Error('Instance not found');
 
-    let apiKey: string;
+    let instanceCode: string;
 
     if (openaiCredsId) {
       // Use specific credential ID if provided
@@ -446,7 +446,7 @@ export class OpenaiController extends BaseChatbotController<OpenaiBot, OpenaiDto
 
       if (!creds) throw new Error('OpenAI credentials not found for the provided ID');
 
-      apiKey = creds.apiKey;
+      instanceCode = creds.instanceCode;
     } else {
       // Use default credentials from settings if no ID provided
       const defaultSettings = await this.settingsRepository.findFirst({
@@ -465,11 +465,11 @@ export class OpenaiController extends BaseChatbotController<OpenaiBot, OpenaiDto
           'OpenAI credentials not found. Please create credentials and associate them with the settings.',
         );
 
-      apiKey = defaultSettings.OpenaiCreds.apiKey;
+      instanceCode = defaultSettings.OpenaiCreds.instanceCode;
     }
 
     try {
-      this.client = new OpenAI({ apiKey });
+      this.client = new OpenAI({ instanceCode });
 
       const models: any = await this.client.models.list();
 

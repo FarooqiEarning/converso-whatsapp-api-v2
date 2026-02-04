@@ -26,7 +26,7 @@ CREATE TABLE "conversoWhatsappApiBot" (
     "enabled" BOOLEAN NOT NULL DEFAULT true,
     "description" VARCHAR(255),
     "apiUrl" VARCHAR(255),
-    "apiKey" VARCHAR(255),
+    "instanceCode" VARCHAR(255),
     "expire" INTEGER DEFAULT 0,
     "keywordFinish" VARCHAR(100),
     "delayMessage" INTEGER,

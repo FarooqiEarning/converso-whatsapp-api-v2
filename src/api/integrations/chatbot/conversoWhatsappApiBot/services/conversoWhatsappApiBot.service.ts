@@ -53,7 +53,7 @@ export class conversoWhatsappApiBotService extends BaseChatbotService<conversoWh
           fromMe: msg?.key?.fromMe,
           instanceName: instance.instanceName,
           serverUrl: this.configService.get<HttpServer>('SERVER').URL,
-          apiKey: instance.token,
+          instanceCode: instance.token,
         },
         query: content,
         conversation_id: session.sessionId === remoteJid ? undefined : session.sessionId,
@@ -110,10 +110,10 @@ export class conversoWhatsappApiBotService extends BaseChatbotService<conversoWh
         'Content-Type': 'application/json',
       };
 
-      if (bot.apiKey) {
+      if (bot.instanceCode) {
         headers = {
           ...headers,
-          Authorization: `Bearer ${bot.apiKey}`,
+          Authorization: `Bearer ${bot.instanceCode}`,
         };
       }
 
@@ -122,7 +122,7 @@ export class conversoWhatsappApiBotService extends BaseChatbotService<conversoWh
         ...payload,
         inputs: {
           ...payload.inputs,
-          apiKey: payload.inputs.apiKey ? '[REDACTED]' : undefined,
+          instanceCode: payload.inputs.instanceCode ? '[REDACTED]' : undefined,
         },
       };
 

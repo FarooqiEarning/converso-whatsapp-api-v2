@@ -55,6 +55,6 @@ COPY --from=builder /converso-whatsapp-api/tsup.config.ts ./tsup.config.ts
 
 ENV DOCKER_ENV=true
 
-EXPOSE 8080
+EXPOSE 7871
 
 ENTRYPOINT ["/bin/bash", "-c", ". ./Docker/scripts/deploy_database.sh && npm run start:prod" ]
