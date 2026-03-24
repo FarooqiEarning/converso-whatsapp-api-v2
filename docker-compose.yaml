@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   api:
     container_name: converso-whatsapp-api
@@ -9,11 +7,11 @@ services:
       - redis
       - converso-whatsapp-api-postgres
     ports:
-      - "127.0.0.1:7871:7871"
+      - "7871:7871"
     volumes:
       - converso-whatsapp-api_instances:/converso-whatsapp-api/instances
     networks:
-      - converso-whatsapp-api-net
+      - converso-whatsapp-api-network
       - dokploy-network
     env_file:
       - .env
@@ -27,7 +25,7 @@ services:
     ports:
       - "3000:80"
     networks:
-      - converso-whatsapp-api-net
+      - converso-whatsapp-api-network
 
   redis:
     container_name: converso-whatsapp-api_redis
@@ -38,7 +36,7 @@ services:
     volumes:
       - converso-whatsapp-api_redis:/data
     networks:
-      converso-whatsapp-api-net:
+      converso-whatsapp-api-network:
         aliases:
           - converso-whatsapp-api-redis
       dokploy-network:
@@ -66,7 +64,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - converso-whatsapp-api-net
+      - converso-whatsapp-api-network
       - dokploy-network
     expose:
       - "5432"
@@ -77,8 +75,8 @@ volumes:
   postgres_data:
 
 networks:
-  converso-whatsapp-api-net:
-    name: converso-whatsapp-api-net
+  converso-whatsapp-api-network:
+    name: converso-whatsapp-api-network
     driver: bridge
   dokploy-network:
     external: true
