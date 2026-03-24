@@ -43,7 +43,7 @@ export class conversoWhatsappApiBotRouter extends RouterBroker {
           request: req,
           schema: instanceSchema,
           ClassRef: InstanceDto,
-          execute: (instance) => newConversoWhatsappApiBotController.fetchBot(instance, req.params.conversoWhatsappApiBotId),
+          execute: (instance) => newConversoWhatsappApiBotController.fetchBot(instance, req.params.conversoWhatsappApiBotId as string),
         });
 
         res.status(HttpStatus.OK).json(response);
@@ -53,7 +53,7 @@ export class conversoWhatsappApiBotRouter extends RouterBroker {
           request: req,
           schema: conversoWhatsappApiBotSchema,
           ClassRef: conversoWhatsappApiBotDto,
-          execute: (instance, data) => newConversoWhatsappApiBotController.updateBot(instance, req.params.conversoWhatsappApiBotId, data),
+          execute: (instance, data) => newConversoWhatsappApiBotController.updateBot(instance, req.params.conversoWhatsappApiBotId as string, data),
         });
 
         res.status(HttpStatus.OK).json(response);
@@ -63,7 +63,7 @@ export class conversoWhatsappApiBotRouter extends RouterBroker {
           request: req,
           schema: instanceSchema,
           ClassRef: InstanceDto,
-          execute: (instance) => newConversoWhatsappApiBotController.deleteBot(instance, req.params.conversoWhatsappApiBotId),
+          execute: (instance) => newConversoWhatsappApiBotController.deleteBot(instance, req.params.conversoWhatsappApiBotId as string),
         });
 
         res.status(HttpStatus.OK).json(response);
@@ -103,7 +103,7 @@ export class conversoWhatsappApiBotRouter extends RouterBroker {
           request: req,
           schema: instanceSchema,
           ClassRef: InstanceDto,
-          execute: (instance) => newConversoWhatsappApiBotController.fetchSessions(instance, req.params.conversoWhatsappApiBotId),
+          execute: (instance) => newConversoWhatsappApiBotController.fetchSessions(instance, req.params.conversoWhatsappApiBotId as string),
         });
 
         res.status(HttpStatus.OK).json(response);

@@ -24,6 +24,10 @@ Converso Whatsapp Api began as a WhatsApp controller API based on [CodeChat](htt
 
 Today, Converso Whatsapp Api is not limited to WhatsApp. It integrates with various platforms such as Typebot, Chatwoot, Dify, and OpenAI, offering a broad array of functionalities beyond messaging. Converso Whatsapp Api supports both the Baileys-based WhatsApp API and the official WhatsApp Business API, with upcoming support for Instagram and Messenger.
 
+```
+docker compose --profile database up --build -d
+```
+
 ## Looking for a Lightweight Version?
 For those who need a more streamlined and performance-optimized version, check out [Converso Whatsapp Api Lite](https://github.com/converso-whatsapp-apiAPI/converso-whatsapp-api-lite). It's designed specifically for microservices, focusing solely on connectivity without integrations or audio conversion features. Ideal for environments that prioritize simplicity and efficiency.
 

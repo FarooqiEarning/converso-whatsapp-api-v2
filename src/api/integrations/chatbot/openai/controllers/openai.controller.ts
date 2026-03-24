@@ -469,7 +469,7 @@ export class OpenaiController extends BaseChatbotController<OpenaiBot, OpenaiDto
     }
 
     try {
-      this.client = new OpenAI({ instanceCode });
+      this.client = new OpenAI({ apiKey: instanceCode });
 
       const models: any = await this.client.models.list();
 

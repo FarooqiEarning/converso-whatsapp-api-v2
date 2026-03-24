@@ -35,7 +35,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
    * Initialize the OpenAI client with the provided API key
    */
   protected initClient(instanceCode: string) {
-    this.client = new OpenAI({ instanceCode });
+    this.client = new OpenAI({ apiKey: instanceCode });
     return this.client;
   }
 
@@ -342,7 +342,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
 
     // Run the assistant
     const runAssistant = await this.client.beta.threads.runs.create(threadId, {
-      assistant_id: openaiBot.assistantId,
+      assistant_id: openaiBot.assistantId as string,
     });
 
     if (instance.integration === Integration.WHATSAPP_BAILEYS) {
@@ -592,7 +592,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
     remoteJid: string,
     pushName: string,
   ) {
-    let status = await this.client.beta.threads.runs.retrieve(threadId, runId);
+    let status = await this.client.beta.threads.runs.retrieve(threadId as any, runId as any);
 
     let maxRetries = 60; // 1 minute with 1s intervals
     const checkInterval = 1000; // 1 second
@@ -605,7 +605,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
       maxRetries > 0
     ) {
       await new Promise((resolve) => setTimeout(resolve, checkInterval));
-      status = await this.client.beta.threads.runs.retrieve(threadId, runId);
+      status = await this.client.beta.threads.runs.retrieve(threadId as any, runId as any);
 
       // Handle tool calls
       if (status.status === 'requires_action' && status.required_action?.type === 'submit_tool_outputs') {
@@ -645,7 +645,7 @@ export class OpenaiService extends BaseChatbotService<OpenaiBot, OpenaiSetting> 
           }
         }
 
-        await this.client.beta.threads.runs.submitToolOutputs(threadId, runId, {
+        await (this.client.beta.threads.runs as any).submitToolOutputs(threadId, runId, {
           tool_outputs: toolOutputs,
         });
       }
