@@ -1,25 +1,10 @@
 services:
-  cloudflare-tunnel:
-    image: cloudflare/cloudflared:latest
-    container_name: converso-whatsapp-api-cloudflare-tunnel
-    hostname: converso-whatsapp-api-connector
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run
-    environment:
-      - TUNNEL_TOKEN=${CLOUDFLARES_TOKEN}
-    env_file:
-      - ./.env
-    networks:
-      - converso-whatsapp-api-network
-    depends_on:
-      - nginx
-
   nginx:
     image: nginx:alpine
     container_name: converso-whatsapp-api-host
     restart: always
-    expose:
-      - "80"
+    ports:
+      - "7871:7871"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
